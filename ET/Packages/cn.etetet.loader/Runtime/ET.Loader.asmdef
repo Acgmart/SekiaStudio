@@ -4,8 +4,7 @@
     "references": [
         "ET.Core",
         "ET.YooAssets",
-        "ET.SourceGeneratorAttribute",
-        "ET.HybridCLR"
+        "ET.SourceGeneratorAttribute"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

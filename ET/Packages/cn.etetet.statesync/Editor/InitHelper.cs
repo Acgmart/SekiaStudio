@@ -8,8 +8,6 @@ namespace ET
         [MenuItem("ET/StateSync/Init")]
         public static void Init()
         {
-            HybridCLREditor.Init();
-            
             ExcelEditor.Init();
             
             ProtoEditor.Init();

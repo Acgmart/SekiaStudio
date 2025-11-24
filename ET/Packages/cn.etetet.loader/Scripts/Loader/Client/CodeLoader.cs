@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using HybridCLR;
 using UnityEngine;
 
 namespace ET
@@ -24,10 +23,6 @@ namespace ET
             if (!Define.IsEditor)
             {
                 this.dlls = await ResourcesComponent.Instance.LoadAllAssetsAsync<TextAsset>($"Packages/cn.etetet.loader/Bundles/Code/ET.Model.dll.bytes");
-                if (Define.EnableIL2CPP)
-                {
-                    this.aotDlls = await ResourcesComponent.Instance.LoadAllAssetsAsync<TextAsset>($"Packages/cn.etetet.loader/Bundles/AotDlls/mscorlib.dll.bytes");
-                }
             }
         }
 
@@ -47,14 +42,6 @@ namespace ET
                 //modelViewAssBytes = File.ReadAllBytes(Path.Combine(Define.CodeDir, "ET.ModelView.dll.bytes"));
                 //modelViewPdbBytes = File.ReadAllBytes(Path.Combine(Define.CodeDir, "ET.ModelView.pdb.bytes"));
 
-                if (Define.EnableIL2CPP)
-                {
-                    foreach (var kv in this.aotDlls)
-                    {
-                        TextAsset textAsset = kv.Value;
-                        RuntimeApi.LoadMetadataForAOTAssembly(textAsset.bytes, HomologousImageMode.SuperSet);
-                    }
-                }
                 this.modelAssembly = Assembly.Load(modelAssBytes, modelPdbBytes);
                 this.modelViewAssembly = Assembly.Load(modelViewAssBytes, modelViewPdbBytes);
             }

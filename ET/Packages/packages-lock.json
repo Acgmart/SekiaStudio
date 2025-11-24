@@ -48,12 +48,6 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "cn.etetet.hybridclr": {
-      "version": "file:cn.etetet.hybridclr",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "cn.etetet.loader": {
       "version": "file:cn.etetet.loader",
       "depth": 0,
@@ -145,7 +139,6 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "cn.etetet.packagemanager": "1.0.0",
         "cn.etetet.actorlocation": "3.0.0",
         "cn.etetet.core": "3.0.3",
         "cn.etetet.loader": "3.0.1",
@@ -164,7 +157,6 @@
         "cn.etetet.referencecollector": "3.0.0",
         "cn.etetet.login": "3.0.0",
         "cn.etetet.netinner": "3.0.0",
-        "cn.etetet.hybridclr": "7.8.1",
         "cn.etetet.excel": "3.0.0",
         "cn.etetet.proto": "3.0.2",
         "cn.etetet.ai": "3.0.0",
