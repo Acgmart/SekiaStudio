@@ -1,6 +1,7 @@
 ﻿using System;
 using CommandLine;
 using UnityEngine;
+using System.Reflection;
 
 namespace ET
 {
@@ -37,7 +38,19 @@ namespace ET
 
             await World.Instance.AddSingleton<ResourcesComponent>().CreatePackageAsync("DefaultPackage", true);
             
-            World.Instance.AddSingleton<CodeLoader>().Start().NoContext();
+#if INITED
+            World.Instance.AddSingleton<CodeTypes, Assembly[]>(new[]
+            {
+                typeof (World).Assembly, //Core
+                typeof (Define).Assembly, //Loader
+                typeof (Entry).Assembly, //Model
+                typeof (Client.ResourcesLoaderComponent).Assembly, //ModelView
+                typeof (ETCancellationTokenHelper).Assembly, //Hotfix
+                typeof (Client.ResourcesLoaderComponentSystem).Assembly, //HotfixView
+            });
+
+            ET.Entry.Start();
+#endif
         }
 
         private void Update()

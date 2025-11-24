@@ -10,14 +10,6 @@ namespace ET
 #if INITED
             UnityEngine.Debug.LogError("Your project are already inited, if you want to reinit, please remove INITED define in unity!");
 #else
-            // 设置GlobalConfig中的SceneName字段
-            SceneNameSetHelper.Run();
-            
-            LinkSlnHelper.Run();
-            
-            // 刷新4个程序集的asmdef引用
-            ScriptsReferencesHelper.Run();
-            
             CodeModeChangeHelper.ChangeToCodeMode("ClientServer");
             
             InitScriptHelper.Run();

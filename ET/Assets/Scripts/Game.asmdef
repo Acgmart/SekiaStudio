@@ -1,26 +1,22 @@
 {
-    "name": "ET.ModelView",
-    "rootNamespace": "ET",
+    "name": "Game",
+    "rootNamespace": "",
     "references": [
         "ET.Core",
-        "ET.Init",
         "ET.Loader",
         "ET.Model",
-        "ET.ReferenceCollector",
-        "ET.SourceGeneratorAttribute",
-        "ET.UI",
-        "ET.YooAssets",
-        "Unity.Mathematics"
+        "ET.ModelView",
+        "ET.Hotfix",
+        "ET.HotfixView",
+        "ET.YooAssets"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": true,
+    "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [
-        "INITED"
-    ],
+    "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
 }

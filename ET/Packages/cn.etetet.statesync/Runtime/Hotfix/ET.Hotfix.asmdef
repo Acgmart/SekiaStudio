@@ -17,12 +17,8 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [
-        "INITED",
-        "IS_COMPILING || UNITY_EDITOR"
+        "INITED"
     ],
     "versionDefines": [],
-    "noEngineReferences": true,
-    "optionalUnityReferences": [],
-    "additionalReferences": [],
-    "compilerOptions": ""
+    "noEngineReferences": true
 }
