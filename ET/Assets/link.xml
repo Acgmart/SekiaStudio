@@ -1,6 +1,10 @@
 <linker>
     <assembly fullname="ET.Core" preserve="all"/>
     <assembly fullname="ET.Loader" preserve="all"/>
+    <assembly fullname="ET.Model" preserve="all"/>
+    <assembly fullname="ET.Hotfix" preserve="all"/>
+    <assembly fullname="ET.ModelView" preserve="all"/>
+    <assembly fullname="ET.HotfixView" preserve="all"/>
     <assembly fullname="UnityEngine" preserve="all"/>
     <assembly fullname="System" preserve="all"/>
     <assembly fullname="MongoDB.Bson" preserve="all"/>

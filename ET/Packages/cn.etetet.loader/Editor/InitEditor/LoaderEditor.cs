@@ -10,7 +10,8 @@ namespace ET
 #if INITED
             UnityEngine.Debug.LogError("Your project are already inited, if you want to reinit, please remove INITED define in unity!");
 #else
-            CodeModeChangeHelper.ChangeToCodeMode("ClientServer");
+            GlobalConfig globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Packages/cn.etetet.loader/Resources/GlobalConfig.asset");
+            CodeModeChangeHelper.ChangeToCodeMode(globalConfig.CodeMode.ToString()); //Client/Server/ClientServer
             
             InitScriptHelper.Run();
             

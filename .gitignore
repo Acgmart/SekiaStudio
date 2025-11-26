@@ -10,7 +10,7 @@ ET/Temp/
 ET/Bundles/
 ET/Assets/StreamingAssets/
 ET/Assets/StreamingAssets.meta
-ET/Output/
+ET/Release/
 
 # 协议 - 目录中存在.asmref文件
 ET/Packages/cn.etetet.proto/CodeMode/*/*/*.cs
