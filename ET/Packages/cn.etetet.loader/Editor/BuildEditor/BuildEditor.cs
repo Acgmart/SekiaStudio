@@ -84,12 +84,6 @@ namespace ET
                     return;
                 }
 
-                if (this.globalConfig.CodeMode != CodeMode.Client)
-                {
-                    Log.Error("build package CodeMode must be CodeMode.Client, please select Client");
-                    return;
-                }
-
                 if (platformType != activePlatform)
                 {
                     switch (EditorUtility.DisplayDialogComplex("Warning!", $"current platform is {activePlatform}, if change to {platformType}, may be take a long time", "change", "cancel", "no change"))
