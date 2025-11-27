@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using CommandLine;
 
 namespace ET.Server
 {
@@ -18,10 +17,8 @@ namespace ET.Server
                 }
                 default:
                 {
-                    CreateRobotArgs options = null;
-                    Parser.Default.ParseArguments<CreateRobotArgs>(content.Split(' '))
-                            .WithNotParsed(error => throw new Exception($"CreateRobotArgs error!"))
-                            .WithParsed(o => { options = o; });
+                    //通过命令行指令 指定机器人数量
+                    CreateRobotArgs options = new CreateRobotArgs();
 
                     RobotManagerComponent robotManagerComponent =
                             fiber.Root.GetComponent<RobotManagerComponent>() ?? fiber.Root.AddComponent<RobotManagerComponent>();

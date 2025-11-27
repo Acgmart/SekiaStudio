@@ -1,5 +1,4 @@
 ﻿using System;
-using CommandLine;
 using UnityEngine;
 using System.Reflection;
 
@@ -21,12 +20,7 @@ namespace ET
                 Log.Error(e.ExceptionObject.ToString());
             };
 
-            // 命令行参数
-            string[] args = "".Split(" ");
-            Parser.Default.ParseArguments<Options>(args)
-                    .WithNotParsed(error => throw new Exception($"命令行格式错误! {error}"))
-                    .WithParsed((o)=>World.Instance.AddSingleton(o));
-
+            World.Instance.AddSingleton<Options>();
             GlobalConfig globalConfig = Resources.Load<GlobalConfig>("GlobalConfig");
             Options.Instance.SceneName = globalConfig.SceneName;
 			
