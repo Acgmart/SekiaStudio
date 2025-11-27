@@ -5,11 +5,6 @@
     {
         protected override async ETTask Run(Scene root, EntryEvent2 args)
         {
-            if (Options.Instance.Console == 1)
-            {
-                root.AddComponent<ConsoleComponent>();
-            }
-            
             World.Instance.AddSingleton<NavmeshComponent>();
             
             int process = root.Fiber.Process;
