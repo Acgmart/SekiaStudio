@@ -21,8 +21,8 @@ MonoBehaviour:
     EnableAddressable: 0
     LocationToLower: 0
     IncludeAssetGUID: 0
-    IgnoreDefaultType: 1
     AutoCollectShaders: 1
+    IgnoreRuleName: NormalIgnoreRule
     Groups:
     - GroupName: AotDlls
       GroupDesc: 
@@ -55,6 +55,14 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
+      - CollectPath: Packages/cn.etetet.excel/Config/Bytes/cs
+        CollectorGUID: c5cd9113859bb9d4493fbf7f503a445b
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
       - CollectPath: Packages/cn.etetet.excel/Config/Bytes/c
         CollectorGUID: 1f8da9b8d3bb3ca469a7f4c383b6a731
         CollectorType: 0

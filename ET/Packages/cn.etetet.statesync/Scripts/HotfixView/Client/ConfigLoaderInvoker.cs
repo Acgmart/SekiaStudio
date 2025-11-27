@@ -13,7 +13,6 @@ namespace ET
             Dictionary<Type, byte[]> output = new Dictionary<Type, byte[]>();
             HashSet<Type> configTypes = CodeTypes.Instance.GetTypes(typeof (ConfigAttribute));
             
-            if (Define.IsEditor)
             {
                 string ct = "cs";
                 GlobalConfig globalConfig = Resources.Load<GlobalConfig>("GlobalConfig");
@@ -50,15 +49,8 @@ namespace ET
                     {
                         configFilePath = $"{ConstValue.ExcelPackagePath}/Config/Bytes/{ct}/{configType.Name}.bytes";
                     }
-                    output[configType] = File.ReadAllBytes(configFilePath);
-                }
-            }
-            else
-            {
-                foreach (Type type in configTypes)
-                {
-                    TextAsset v = await ResourcesComponent.Instance.LoadAssetAsync<TextAsset>($"{ConstValue.ExcelPackagePath}/Config/Bytes/c/{type.Name}.bytes");
-                    output[type] = v.bytes;
+                    TextAsset v = await ResourcesComponent.Instance.LoadAssetAsync<TextAsset>(configFilePath);
+                    output[configType] = v.bytes;
                 }
             }
 
