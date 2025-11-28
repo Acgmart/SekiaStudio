@@ -46,7 +46,8 @@ namespace ET
         {
             get
             {
-                return $"{this.GetType().Name} ({this.SceneType})";
+                string sceneName = SceneTypeSingleton.Instance.GetSceneName(this.SceneType);
+                return $"{this.GetType().Name} ({sceneName})";
             }
         }
     }
