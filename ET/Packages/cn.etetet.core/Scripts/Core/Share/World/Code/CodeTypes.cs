@@ -52,16 +52,5 @@ namespace ET
             this.allTypes.TryGetValue(typeName, out type);
             return type;
         }
-        
-        public void CodeProcess()
-        {
-            var hashSet = this.GetTypes(typeof (CodeProcessAttribute));
-            foreach (Type type in hashSet)
-            {
-                object obj = Activator.CreateInstance(type);
-                ((ISingletonAwake)obj).Awake();
-                World.Instance.AddSingleton((ASingleton)obj);
-            }
-        }
     }
 }

@@ -37,18 +37,6 @@ namespace ET
         }
 
         /// <summary>
-        /// 菜单和快捷键热重载按钮
-        /// </summary>
-        [MenuItem("ET/Loader/Reload _F7", false, ETMenuItemPriority.Compile)]
-        static void MenuItemOfReload()
-        {
-            if (Application.isPlaying)
-            {
-                CodeLoader.Instance?.Reload();
-            }
-        }
-
-        /// <summary>
         /// 执行编译代码流程
         /// </summary>
         public static void DoCompile()
