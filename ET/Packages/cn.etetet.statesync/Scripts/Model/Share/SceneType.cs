@@ -4,7 +4,6 @@
     {
         public const int Http = PackageType.StateSync * 1000 + 1;
         public const int Map = PackageType.StateSync * 1000 + 2;
-        public const int Robot = PackageType.StateSync * 1000 + 3;
 
         // 客户端
         public const int StateSync = PackageType.StateSync * 1000 + 20;
