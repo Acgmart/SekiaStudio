@@ -227,7 +227,7 @@ namespace ET
             {
                 var methodSymbol = context.SemanticModel.GetDeclaredSymbol(methodDeclarationSyntax);
 
-                bool? enableAccessEntiyChild = methodSymbol?.GetAttributes().Any(x => x.AttributeClass?.ToString() == Definition.EnableAccessEntiyChildAttribute);
+                bool? enableAccessEntiyChild = methodSymbol?.GetAttributes().Any(x => x.AttributeClass?.ToString() == Definition.EnableAccessEntityChildAttribute);
                 if (enableAccessEntiyChild == null || !enableAccessEntiyChild.Value)
                 {
                     Diagnostic diagnostic = Diagnostic.Create(DisableAccessEntityChildAnalyzerRule.Rule, memberAccessExpressionSyntax?.Name.Identifier.GetLocation());
@@ -242,7 +242,7 @@ namespace ET
             {
                 var propertySymbol = context.SemanticModel.GetDeclaredSymbol(propertyDeclarationSyntax);
                 
-                bool? enableAccessEntiyChild = propertySymbol?.GetAttributes().Any(x => x.AttributeClass?.ToString() == Definition.EnableAccessEntiyChildAttribute);
+                bool? enableAccessEntiyChild = propertySymbol?.GetAttributes().Any(x => x.AttributeClass?.ToString() == Definition.EnableAccessEntityChildAttribute);
                 if (enableAccessEntiyChild == null || !enableAccessEntiyChild.Value)
                 {
                     Diagnostic diagnostic = Diagnostic.Create(DisableAccessEntityChildAnalyzerRule.Rule, memberAccessExpressionSyntax?.Name.Identifier.GetLocation());

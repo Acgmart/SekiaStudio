@@ -2,13 +2,13 @@
 {
     public static class UIHelper
     {
-        [EnableAccessEntiyChild]
+        [EnableAccessEntityChild]
         public static async ETTask<UI> Create(Entity scene, string uiType, UILayer uiLayer)
         {
             return await scene.GetComponent<UIComponent>().Create(uiType, uiLayer);
         }
         
-        [EnableAccessEntiyChild]
+        [EnableAccessEntityChild]
         public static async ETTask Remove(Entity scene, string uiType)
         {
             scene.GetComponent<UIComponent>().Remove(uiType);

@@ -207,7 +207,7 @@ namespace ET
                 IMethodSymbol? methodSymbol = context.SemanticModel.GetDeclaredSymbol(methodDeclarationSyntax);
 
                 bool? enableAccessEntiyChild = methodSymbol?.GetAttributes()
-                        .Any(x => x.AttributeClass?.ToString() == Definition.EnableAccessEntiyChildAttribute);
+                        .Any(x => x.AttributeClass?.ToString() == Definition.EnableAccessEntityChildAttribute);
                 if (enableAccessEntiyChild == null || !enableAccessEntiyChild.Value)
                 {
                     Diagnostic diagnostic = Diagnostic.Create(DisableAccessEntityChildAnalyzerRule.Rule,
@@ -225,7 +225,7 @@ namespace ET
                 IPropertySymbol? propertySymbol = context.SemanticModel.GetDeclaredSymbol(propertyDeclarationSyntax);
 
                 bool? enableAccessEntiyChild = propertySymbol?.GetAttributes()
-                        .Any(x => x.AttributeClass?.ToString() == Definition.EnableAccessEntiyChildAttribute);
+                        .Any(x => x.AttributeClass?.ToString() == Definition.EnableAccessEntityChildAttribute);
                 if (enableAccessEntiyChild == null || !enableAccessEntiyChild.Value)
                 {
                     Diagnostic diagnostic = Diagnostic.Create(DisableAccessEntityChildAnalyzerRule.Rule,

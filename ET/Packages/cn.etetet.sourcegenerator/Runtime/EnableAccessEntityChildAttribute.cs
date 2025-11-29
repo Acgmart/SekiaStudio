@@ -7,7 +7,7 @@ namespace ET
     /// 仅供必要时使用 大多数情况推荐通过Entity的子类访问
     /// </summary>
     [AttributeUsage(AttributeTargets.Method|AttributeTargets.Property)]
-    public class EnableAccessEntiyChildAttribute : Attribute
+    public class EnableAccessEntityChildAttribute : Attribute
     {
         
     }

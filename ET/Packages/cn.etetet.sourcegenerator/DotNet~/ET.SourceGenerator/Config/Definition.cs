@@ -30,7 +30,7 @@ namespace ET
 
         public const string ComponentOfAttribute = "ET.ComponentOfAttribute";
         
-        public const string EnableAccessEntiyChildAttribute = "ET.EnableAccessEntiyChildAttribute";
+        public const string EnableAccessEntityChildAttribute = "ET.EnableAccessEntityChildAttribute";
 
         public const string StaticFieldAttribute = "ET.StaticFieldAttribute";
 
