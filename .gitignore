@@ -1,6 +1,8 @@
 .DS_Store
 .idea/
 .vscode/
+.vsconfig
+.vs
 
 ET/Library/
 ET/obj/
