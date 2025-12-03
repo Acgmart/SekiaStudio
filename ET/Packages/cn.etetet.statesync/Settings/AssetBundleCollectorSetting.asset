@@ -24,32 +24,6 @@ MonoBehaviour:
     AutoCollectShaders: 1
     IgnoreRuleName: NormalIgnoreRule
     Groups:
-    - GroupName: AotDlls
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Packages/cn.etetet.loader/Bundles/AotDlls
-        CollectorGUID: 5edf4794c66cecc4f808f8db8d9206b7
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
-    - GroupName: Code
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Packages/cn.etetet.loader/Bundles/Code
-        CollectorGUID: 750bf868de4ad9a4aae2958c57b5bb16
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
     - GroupName: Config
       GroupDesc: 
       AssetTags: 
@@ -63,20 +37,12 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-      - CollectPath: Packages/cn.etetet.excel/Config/Bytes/c
-        CollectorGUID: 1f8da9b8d3bb3ca469a7f4c383b6a731
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
     - GroupName: Scenes
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Packages/cn.etetet.demores/Scenes
+      - CollectPath: Assets/Scenes
         CollectorGUID: e528ff0fe84cd9a4587b007cc977279a
         CollectorType: 0
         AddressRuleName: AddressByFileName
@@ -102,7 +68,7 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Packages/cn.etetet.demores/Bundles/Unit
+      - CollectPath: Assets/Bundles/Unit
         CollectorGUID: 2f805b95f651fcc47a8ad0cc32706c38
         CollectorType: 0
         AddressRuleName: AddressByFileName
