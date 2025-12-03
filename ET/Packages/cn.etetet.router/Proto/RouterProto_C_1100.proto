@@ -1,8 +1,0 @@
-syntax = "proto3";
-package ET;
-
-message HttpGetRouterResponse
-{
-	repeated string Realms = 1;
-	repeated string Routers = 2;
-}
