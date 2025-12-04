@@ -42,8 +42,8 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/Scenes
-        CollectorGUID: e528ff0fe84cd9a4587b007cc977279a
+      - CollectPath: Assets/Bundles/Scenes
+        CollectorGUID: 67b154faf18394408a21ac40d7350d3f
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackSeparately
