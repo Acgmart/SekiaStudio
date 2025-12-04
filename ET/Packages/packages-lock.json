@@ -18,12 +18,6 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "cn.etetet.core": {
-      "version": "file:cn.etetet.core",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "cn.etetet.excel": {
       "version": "file:cn.etetet.excel",
       "depth": 0,
@@ -108,7 +102,6 @@
       "source": "embedded",
       "dependencies": {
         "cn.etetet.actorlocation": "3.0.0",
-        "cn.etetet.core": "3.0.3",
         "cn.etetet.loader": "3.0.1",
         "cn.etetet.unit": "3.0.0",
         "cn.etetet.http": "3.0.0",
