@@ -72,7 +72,6 @@ namespace ET
             World.Instance.AddSingleton<MessageDispatcher>();
             World.Instance.AddSingleton<MessageSessionDispatcher>();
             World.Instance.AddSingleton<NumericWatcherComponent>();
-            World.Instance.AddSingleton<Server.HttpDispatcher>();
             World.Instance.AddSingleton<Client.UIEventComponent>();
             
             await World.Instance.AddSingleton<ConfigLoader>().LoadAsync();
