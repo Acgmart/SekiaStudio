@@ -23,7 +23,9 @@ namespace ET
             }
 
             Regex logFileRegex = new(@"((Log\.cs)|(UnityLogger\.cs)|(YooLogger\.cs))");
+#pragma warning disable CS0618 // 类型或成员已过时
             string codePath = AssetDatabase.GetAssetPath(instanceID);
+#pragma warning restore CS0618 // 类型或成员已过时
             if (logFileRegex.IsMatch(codePath))
             {
                 var content = GetStackTrace();
