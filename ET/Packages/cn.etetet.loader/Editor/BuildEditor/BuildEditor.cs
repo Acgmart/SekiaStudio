@@ -1,6 +1,5 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using YooAsset;
 
 namespace ET
 {
@@ -34,9 +33,6 @@ namespace ET
         private PlatformType platformType;
         private BuildOptions buildOptions;
 
-        private GlobalConfig globalConfig;
-        private YooConfig yooConfig;
-
         [MenuItem("ET/Loader/Build Tool", false, ETMenuItemPriority.BuildTool)]
         public static void ShowWindow()
         {
@@ -45,9 +41,6 @@ namespace ET
 
         private void OnEnable()
         {
-            globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Packages/cn.etetet.loader/Resources/GlobalConfig.asset");
-            yooConfig = AssetDatabase.LoadAssetAtPath<YooConfig>("Packages/cn.etetet.yooassets/YooConfig.asset");
-
 #if UNITY_ANDROID
             activePlatform = PlatformType.Android;
 #elif UNITY_IOS
