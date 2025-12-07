@@ -65,5 +65,5 @@ ET/Packages/cn.etetet.mathematics/DotNet~/obj/
 # 客户端dll 需要在初始化前生成
 # ET/Packages/cn.etetet.sourcegenerator/ET.SourceGenerator.dll
 # ET/Packages/cn.etetet.sourcegenerator/ET.SourceGenerator.dll.meta
-# ET/Packages/cn.etetet.excel/DotNet~/Exe/
+ET/Packages/cn.etetet.excel/DotNet~/Exe/
 # ET/Packages/cn.etetet.proto/DotNet~/Exe/
