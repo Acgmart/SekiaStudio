@@ -42,30 +42,6 @@ ET/Packages/cn.etetet.excel/Config/Bytes/s/
 # 表格配置类型声明代码 - 目录中存在.asmref文件
 ET/Packages/cn.etetet.excel/CodeMode/Model/*/*.cs
 ET/Packages/cn.etetet.excel/CodeMode/Model/*/*.cs.meta
-ET/Packages/cn.etetet.excel/CodeMode/Model/*/*.asmref
-ET/Packages/cn.etetet.excel/CodeMode/Model/*/*.asmref.meta
-
-# 模块代码
-ET/Packages/cn.etetet.*/Scripts/Model/Share/AssemblyReference.asmref
-ET/Packages/cn.etetet.*/Scripts/Model/Share/AssemblyReference.asmref.meta
-ET/Packages/cn.etetet.*/Scripts/Model/Client/AssemblyReference.asmref
-ET/Packages/cn.etetet.*/Scripts/Model/Client/AssemblyReference.asmref.meta
-ET/Packages/cn.etetet.*/Scripts/Model/Server/AssemblyReference.asmref
-ET/Packages/cn.etetet.*/Scripts/Model/Server/AssemblyReference.asmref.meta
-ET/Packages/cn.etetet.*/Scripts/Hotfix/Share/AssemblyReference.asmref
-ET/Packages/cn.etetet.*/Scripts/Hotfix/Share/AssemblyReference.asmref.meta
-ET/Packages/cn.etetet.*/Scripts/Hotfix/Client/AssemblyReference.asmref
-ET/Packages/cn.etetet.*/Scripts/Hotfix/Client/AssemblyReference.asmref.meta
-ET/Packages/cn.etetet.*/Scripts/Hotfix/Server/AssemblyReference.asmref
-ET/Packages/cn.etetet.*/Scripts/Hotfix/Server/AssemblyReference.asmref.meta
-ET/Packages/cn.etetet.*/Scripts/HotfixView/Client/AssemblyReference.asmref
-ET/Packages/cn.etetet.*/Scripts/HotfixView/Client/AssemblyReference.asmref.meta
-ET/Packages/cn.etetet.*/Scripts/ModelView/Client/AssemblyReference.asmref
-ET/Packages/cn.etetet.*/Scripts/ModelView/Client/AssemblyReference.asmref.meta
-ET/Packages/cn.etetet.*/Scripts/Loader/Client/AssemblyReference.asmref
-ET/Packages/cn.etetet.*/Scripts/Loader/Client/AssemblyReference.asmref.meta
-ET/Packages/cn.etetet.*/Scripts/Loader/Server/AssemblyReference.asmref
-ET/Packages/cn.etetet.*/Scripts/Loader/Server/AssemblyReference.asmref.meta
 
 ET/*.csproj
 ET/*.sln
