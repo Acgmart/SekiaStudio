@@ -97,11 +97,16 @@ namespace ET
 
         public static void Export()
         {
+            //设置当前路径为Unity工程根目录
+            string currentDir = Directory.GetCurrentDirectory();
+            if (currentDir.EndsWith("Packages\\cn.etetet.excel\\DotNet~\\Exe"))
+            {
+                currentDir = currentDir.Substring(0, currentDir.IndexOf("Packages"));
+                Directory.SetCurrentDirectory(currentDir);
+            }
+
             try
             {
-                // 强制调用一下mongo，避免mongo库被裁剪
-                MongoHelper.ToJson(1);
-                
                 template = File.ReadAllText("./Packages/cn.etetet.excel/DotNet~/Template.txt");
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 
@@ -331,6 +336,9 @@ namespace ET
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (Assembly assembly in assemblies)
             {
+                //包括当前程序集、所有依赖项(包、项目、引用)、DOTNET运行时
+                //即对当前程序集有完整的引用
+                //可以直接把生成的代码放进来看是否报错
                 try
                 {
                     if (assembly.IsDynamic)

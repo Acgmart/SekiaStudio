@@ -9,7 +9,6 @@ namespace ET
         {
             try
             {
-                NoCut.Run();
                 ExcelExporter.Export();
             }
             catch (Exception e)
