@@ -1,8 +1,7 @@
 {
-    "name": "ET.Core.Editor",
+    "name": "ET.Editor",
     "rootNamespace": "ET",
     "references": [
-        "MemoryPack",
         "Unity.Mathematics",
         "ET.Core"
     ],
