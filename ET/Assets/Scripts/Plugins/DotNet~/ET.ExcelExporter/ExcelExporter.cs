@@ -99,7 +99,7 @@ namespace ET
         {
             //设置当前路径为Unity工程根目录
             string currentDir = Directory.GetCurrentDirectory();
-            if (currentDir.EndsWith("Packages\\cn.etetet.excel\\DotNet~\\Exe"))
+            if (currentDir.EndsWith("Assets\\Scripts\\Plugins\\DotNet~\\ET.ExcelExporter\\Exe"))
             {
                 currentDir = currentDir.Substring(0, currentDir.IndexOf("Packages"));
                 Directory.SetCurrentDirectory(currentDir);
@@ -107,7 +107,7 @@ namespace ET
 
             try
             {
-                template = File.ReadAllText("./Packages/cn.etetet.excel/DotNet~/Template.txt");
+                template = File.ReadAllText("./Assets/Scripts/Plugins/DotNet~/ET.ExcelExporter/Template.txt");
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 
                 PackagesLock packagesLock = PackageHelper.LoadEtPackagesLock("./");

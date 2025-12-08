@@ -13,57 +13,35 @@ ET/Bundles/
 ET/Assets/StreamingAssets/
 ET/Assets/StreamingAssets.meta
 ET/Release/
+ET/UserSettings/
+
+ET/*.csproj
+ET/*.sln
+ET/*.sln.DotSettings.user
 
 # 协议 - 目录中存在.asmref文件
 ET/Packages/cn.etetet.proto/CodeMode/*/*/*.cs
 ET/Packages/cn.etetet.proto/CodeMode/*/*/*.cs.meta
-ET/Packages/cn.etetet.proto/CodeMode/*/*/*.asmref
-ET/Packages/cn.etetet.proto/CodeMode/*/*/*.asmref.meta
 ET/Packages/cn.etetet.proto/CodeMode.meta
 ET/Packages/cn.etetet.proto/CodeMode/Model.meta
 ET/Packages/cn.etetet.proto/CodeMode/Model/Client.meta
 ET/Packages/cn.etetet.proto/CodeMode/Model/ClientServer.meta
 ET/Packages/cn.etetet.proto/CodeMode/Model/Server.meta
 
-# DLL打包输出
-ET/Packages/cn.etetet.loader/Bundles/Code/*.dll.bytes
-ET/Packages/cn.etetet.loader/Bundles/Code/*.dll.bytes.meta
-ET/Packages/cn.etetet.loader/Bundles/Code/*.pdb.bytes
-ET/Packages/cn.etetet.loader/Bundles/Code/*.pdb.bytes.meta
-
-# 表格配置Json版本 .txt
+# 表格配置Json版本.txt文件和二进制.bytes文件
+ET/Packages/cn.etetet.excel/CodeMode/Model/*/*.cs
+ET/Packages/cn.etetet.excel/CodeMode/Model/*/*.cs.meta
 ET/Packages/cn.etetet.excel/Config/Json/cs/
 ET/Packages/cn.etetet.excel/Config/Json/c/
 ET/Packages/cn.etetet.excel/Config/Json/s/
-# 表格配置二进制版本 .bytes
 ET/Packages/cn.etetet.excel/Config/Bytes/cs/
 ET/Packages/cn.etetet.excel/Config/Bytes/c/
 ET/Packages/cn.etetet.excel/Config/Bytes/s/
-# 表格配置类型声明代码 - 目录中存在.asmref文件
-ET/Packages/cn.etetet.excel/CodeMode/Model/*/*.cs
-ET/Packages/cn.etetet.excel/CodeMode/Model/*/*.cs.meta
 
-ET/*.csproj
-ET/*.sln
-ET/UserSettings/
-
-ET/ET.sln.DotSettings.user
-ET/Unity.sln.DotSettings.user
-
-# 服务端or双端共享dll 需要在初始化时生成
-ET/Packages/cn.etetet.sourcegenerator/DotNet~/ET.SourceGenerator/obj/
-ET/Packages/cn.etetet.sourcegenerator/DotNet~/ET.SourceGeneratorAttribute/obj/
-ET/Packages/cn.etetet.statesync/DotNet~/App/obj/
-ET/Packages/cn.etetet.statesync/DotNet~/Model/obj/
-ET/Packages/cn.etetet.statesync/DotNet~/Hotfix/obj/
-ET/Packages/cn.etetet.recast/DotNet~/obj/
-ET/Packages/cn.etetet.proto/DotNet~/obj/
-ET/Packages/cn.etetet.loader/DotNet~/obj/
-ET/Packages/cn.etetet.core/DotNet~/obj/
-ET/Packages/cn.etetet.excel/DotNet~/obj/
-ET/Packages/cn.etetet.mathematics/DotNet~/obj/
-# 客户端dll 需要在初始化前生成
-# ET/Packages/cn.etetet.sourcegenerator/ET.SourceGenerator.dll
-# ET/Packages/cn.etetet.sourcegenerator/ET.SourceGenerator.dll.meta
-ET/Packages/cn.etetet.excel/DotNet~/Exe/
-ET/Packages/cn.etetet.proto/DotNet~/Exe/
+# 服务端or双端共享dll
+ET/Assets/Scripts/Plugins/DotNet~/ET.ExcelExporter/Exe/
+ET/Assets/Scripts/Plugins/DotNet~/ET.ExcelExporter/obj/
+ET/Assets/Scripts/Plugins/DotNet~/ET.Proto2CS/Exe/
+ET/Assets/Scripts/Plugins/DotNet~/ET.Proto2CS/obj/
+ET/Assets/Scripts/Plugins/DotNet~/ET.SourceGenerator/Exe/
+ET/Assets/Scripts/Plugins/DotNet~/ET.SourceGenerator/obj/

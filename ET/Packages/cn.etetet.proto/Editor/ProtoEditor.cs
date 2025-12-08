@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using System.Diagnostics;
+using System.IO;
 
 namespace ET
 {
@@ -8,7 +9,9 @@ namespace ET
         [MenuItem("ET/Proto/Proto2CS")]
         public static void Run()
         {
-            Process process = ProcessHelper.DotNet("./Packages/cn.etetet.proto/DotNet~/Exe/ET.Proto2CS.dll", "./", true);
+            if (!File.Exists("./Assets/Scripts/Plugins/DotNet~/ET.Proto2CS/Exe/ET.Proto2CS.dll"))
+                ProcessHelper.DotNet("build --configuration Release", "./Assets/Scripts/Plugins/DotNet~/ET.Proto2CS/", true);
+            Process process = ProcessHelper.DotNet("./Assets/Scripts/Plugins/DotNet~/ET.Proto2CS/Exe/ET.Proto2CS.dll", "./", true);
 
             UnityEngine.Debug.Log(process.StandardOutput.ReadToEnd());
         }
