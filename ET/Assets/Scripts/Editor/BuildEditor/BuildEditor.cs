@@ -31,7 +31,7 @@ namespace ET
     {
         private PlatformType activePlatform;
         private PlatformType platformType;
-        private BuildOptions buildOptions;
+        private BuildOptions buildOptions = BuildOptions.Development;
 
         [MenuItem("ET/Loader/Build Tool", false, ETMenuItemPriority.BuildTool)]
         public static void ShowWindow()

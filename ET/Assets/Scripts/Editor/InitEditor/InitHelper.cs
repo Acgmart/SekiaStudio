@@ -12,8 +12,8 @@ namespace ET
             
             ProtoEditor.Init();
             
-            LoaderEditor.Init();    
-            
+            DefineHelper.EnableDefineSymbols("INITED", true);
+
             AssetDatabase.Refresh();
             
             Debug.Log("Init finish!");

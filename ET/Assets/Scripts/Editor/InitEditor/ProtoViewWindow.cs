@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-namespace ET.Editor
+namespace ET
 {
     /// <summary> 用于显示当前项目中的Proto </summary>
     public class ProtoViewWindow : EditorWindow
