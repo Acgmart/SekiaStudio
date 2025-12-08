@@ -31,9 +31,14 @@ namespace ET
 
         public static void Proto2CS()
         {
-            // 强制调用一下mongo，避免mongo库被裁剪
-            MongoHelper.ToJson(1);
-            
+            //设置当前路径为Unity工程根目录
+            string currentDir = Directory.GetCurrentDirectory();
+            if (currentDir.EndsWith("Packages\\cn.etetet.proto\\DotNet~\\Exe"))
+            {
+                currentDir = currentDir.Substring(0, currentDir.IndexOf("Packages"));
+                Directory.SetCurrentDirectory(currentDir);
+            }
+
             msgOpcode.Clear();
             opcodeList.Clear();
 

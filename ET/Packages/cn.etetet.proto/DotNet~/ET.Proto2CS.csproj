@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -28,30 +28,11 @@
       <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
     
-    <ItemGroup>        
-        <Compile Include="..\..\cn.etetet.core\Runtime\Model\Share\Module\Config\**\*.cs">
-            <Link>Module\Config\%(RecursiveDir)%(FileName)%(Extension)</Link>
-        </Compile>
-
-        <Compile Include="..\..\cn.etetet.core\Runtime\Model\Share\Module\Log\**\*.cs">
-            <Link>Module\Log\%(RecursiveDir)%(FileName)%(Extension)</Link>
-        </Compile>
-    </ItemGroup>
-    
-    <ItemGroup>
-      <None Update="Template.txt">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-    
     <ItemGroup>
       <PackageReference Include="EPPlus" Version="7.1.2" />
       <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.9.2" />
       <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <ProjectReference Include="..\..\cn.etetet.core\DotNet~\ET.Core.csproj" />
+      <PackageReference Include="MongoDB.Bson" Version="3.5.2" />
     </ItemGroup>
 
 </Project>

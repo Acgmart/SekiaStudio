@@ -8,7 +8,6 @@ namespace ET
         {
             try
             {
-                NoCut.Run();
                 Proto2CS.Export();
             }
             catch (Exception e)
