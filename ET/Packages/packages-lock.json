@@ -36,12 +36,6 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "cn.etetet.memorypack": {
-      "version": "file:cn.etetet.memorypack",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "cn.etetet.move": {
       "version": "file:cn.etetet.move",
       "depth": 0,
@@ -78,12 +72,6 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "cn.etetet.sourcegenerator": {
-      "version": "file:cn.etetet.sourcegenerator",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "cn.etetet.startconfig": {
       "version": "file:cn.etetet.startconfig",
       "depth": 0,
@@ -109,9 +97,7 @@
         "cn.etetet.excel": "3.0.0",
         "cn.etetet.proto": "3.0.2",
         "cn.etetet.ai": "3.0.0",
-        "cn.etetet.sourcegenerator": "3.0.1",
         "cn.etetet.yooassets": "2.3.6",
-        "cn.etetet.memorypack": "1.10.1",
         "cn.etetet.startconfig": "3.0.0"
       }
     },
@@ -137,12 +123,6 @@
         "com.unity.modules.unitywebrequest": "1.0.0",
         "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
       }
-    },
-    "com.etetet.init": {
-      "version": "file:com.etetet.init",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
     },
     "com.unity.burst": {
       "version": "1.8.25",
