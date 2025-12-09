@@ -10,13 +10,11 @@ namespace ET
     public partial struct Address
     {
         [MemoryPackOrder(0)]
-        public int Process;
-        [MemoryPackOrder(1)]
         public int Fiber;
         
         public bool Equals(Address other)
         {
-            return this.Process == other.Process && this.Fiber == other.Fiber;
+            return this.Fiber == other.Fiber;
         }
 
         public override bool Equals(object obj)
@@ -26,18 +24,17 @@ namespace ET
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(this.Process, this.Fiber);
+            return HashCode.Combine(this.Fiber);
         }
         
-        public Address(int process, int fiber)
+        public Address(int fiber)
         {
-            this.Process = process;
             this.Fiber = fiber;
         }
 
         public static bool operator ==(Address left, Address right)
         {
-            return left.Process == right.Process && left.Fiber == right.Fiber;
+            return left.Fiber == right.Fiber;
         }
 
         public static bool operator !=(Address left, Address right)
@@ -47,7 +44,7 @@ namespace ET
 
         public override string ToString()
         {
-            return $"{this.Process}:{this.Fiber}";
+            return $"{this.Fiber}";
         }
     }
     
@@ -76,19 +73,6 @@ namespace ET
         public long InstanceId;
 
         [BsonIgnore]
-        public int Process
-        {
-            get
-            {
-                return this.Address.Process;
-            }
-            set
-            {
-                this.Address.Process = value;
-            }
-        }
-        
-        [BsonIgnore]
         public int Fiber
         {
             get
@@ -101,15 +85,15 @@ namespace ET
             }
         }
         
-        public ActorId(int process, int fiber)
+        public ActorId(int fiber)
         {
-            this.Address = new Address(process, fiber);
+            this.Address = new Address(fiber);
             this.InstanceId = 1;
         }
         
-        public ActorId(int process, int fiber, long instanceId)
+        public ActorId(int fiber, long instanceId)
         {
-            this.Address = new Address(process, fiber);
+            this.Address = new Address(fiber);
             this.InstanceId = instanceId;
         }
         
@@ -135,7 +119,7 @@ namespace ET
 
         public override string ToString()
         {
-            return $"{this.Process}:{this.Fiber}:{this.InstanceId}";
+            return $"{this.Fiber}:{this.InstanceId}";
         }
     }
 }

@@ -9,13 +9,7 @@ namespace ET.Server
         protected override async ETTask Run(Session session, C2G_LoginGate request, G2C_LoginGate response)
         {
             Scene root = session.Root();
-            string account = root.GetComponent<GateSessionKeyComponent>().Get(request.Key);
-            if (account == null)
-            {
-                response.Error = ErrorCode.ERR_ConnectGateKeyError;
-                response.Message = "Gate key验证失败!";
-                return;
-            }
+            string account = session.Id.ToString(); //玩家的识别ID
             
             session.RemoveComponent<SessionAcceptTimeoutComponent>();
 
@@ -28,10 +22,10 @@ namespace ET.Server
                 PlayerSessionComponent playerSessionComponent = player.AddComponent<PlayerSessionComponent>();
                 playerSessionComponent.AddComponent<MailBoxComponent, int>(MailBoxType.GateSession);
                 await playerSessionComponent.AddLocation(LocationType.GateSession);
-			
+
                 player.AddComponent<MailBoxComponent, int>(MailBoxType.UnOrderedMessage);
                 await player.AddLocation(LocationType.Player);
-			
+
                 session.AddComponent<SessionPlayerComponent>().Player = player;
                 playerSessionComponent.Session = session;
             }

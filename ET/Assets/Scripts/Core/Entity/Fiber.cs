@@ -9,7 +9,7 @@ namespace ET
         public static ActorId GetActorId(this Entity self)
         {
             Fiber root = self.Fiber();
-            return new ActorId(root.Process, root.Id, self.InstanceId);
+            return new ActorId(root.Id, self.InstanceId);
         }
     }
     
@@ -32,15 +32,7 @@ namespace ET
         {
             get
             {
-                return new Address(this.Process, this.Id);
-            }
-        }
-
-        public int Process
-        {
-            get
-            {
-                return Options.Instance.Process;
+                return new Address(this.Id);
             }
         }
 
@@ -60,7 +52,7 @@ namespace ET
             this.ThreadSynchronizationContext = new ThreadSynchronizationContext();
 
             LogInvoker logInvoker = new()
-                    { Fiber = this.Id, Process = this.Process, SceneName = SceneTypeSingleton.Instance.GetSceneName(sceneType) };
+                    { Fiber = this.Id, SceneName = SceneTypeSingleton.Instance.GetSceneName(sceneType) };
             this.Log = EventSystem.Instance.Invoke<LogInvoker, ILog>(logInvoker);
             
             this.Root = new Scene(this, id, 1, sceneType, name);

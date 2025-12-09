@@ -20,6 +20,12 @@ namespace ET.Server
 
             StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.Get((int)root.Id);
             root.AddComponent<NetComponent, IKcpTransport>(new UdpTransport(startSceneConfig.InnerIPPort));
+
+            root.AddComponent<UnitComponent>();
+            root.AddComponent<AOIManagerComponent>();
+
+            root.AddComponent<LocationManagerComoponent>();
+
             await ETTask.CompletedTask;
         }
     }

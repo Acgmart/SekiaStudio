@@ -11,38 +11,22 @@ namespace ET.Client
         {
             string account = request.Account;
             string password = request.Password;
-
-            int portIndex = request.Address.LastIndexOf(":");
-            IPAddress ipAddress = IPAddress.Parse(request.Address.Substring(0, portIndex));
-            int port = int.Parse(request.Address.Substring(portIndex + 1));
-            IPEndPoint realmAddress = new IPEndPoint(ipAddress, port);
-            AddressFamily addressFamily = ipAddress.AddressFamily;
+            IPEndPoint gateAddress = NetworkHelper.ToIPEndPoint(request.Address);
 
 #if UNITY_WEBGL
-            root.AddComponent<NetComponent, IKcpTransport>(new WebSocketTransport(addressFamily));
+            root.AddComponent<NetComponent, IKcpTransport>(new WebSocketTransport(gateAddress.Address.AddressFamily));
 #else
-            root.AddComponent<NetComponent, IKcpTransport>(new UdpTransport(addressFamily));
+            root.AddComponent<NetComponent, IKcpTransport>(new UdpTransport(gateAddress.Address.AddressFamily));
 #endif
             root.GetComponent<FiberParentComponent>().ParentFiberId = request.OwnerFiberId;
 
             NetComponent netComponent = root.GetComponent<NetComponent>();
             
-            R2C_Login r2CLogin;
-            using (Session session = netComponent.Create(realmAddress))
-            {
-                C2R_Login c2RLogin = C2R_Login.Create();
-                c2RLogin.Account = account;
-                c2RLogin.Password = password;
-                r2CLogin = (R2C_Login)await session.Call(c2RLogin);
-            }
-
             // 创建一个gate Session,并且保存到SessionComponent中
-            Session gateSession = netComponent.Create(NetworkHelper.ToIPEndPoint(r2CLogin.Address));
+            Session gateSession = netComponent.Create(gateAddress);
             gateSession.AddComponent<ClientSessionErrorComponent>();
             root.AddComponent<SessionComponent>().Session = gateSession;
             C2G_LoginGate c2GLoginGate = C2G_LoginGate.Create();
-            c2GLoginGate.Key = r2CLogin.Key;
-            c2GLoginGate.GateId = r2CLogin.GateId;
             G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await gateSession.Call(c2GLoginGate);
 
 

@@ -7,7 +7,7 @@
         {
             World.Instance.AddSingleton<NavmeshComponent>();
             
-            int process = root.Fiber.Process;
+            int process = 1;
             StartProcessConfig startProcessConfig = StartProcessConfigCategory.Instance.Get(process);
             if (startProcessConfig.Port != 0)
             {

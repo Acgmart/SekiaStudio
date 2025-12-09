@@ -40,12 +40,6 @@ namespace ET.Client
             {
                 self.TestCancelAfter().WithContext(new ETCancellationToken());
             }
-
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                C2M_TransferMap c2MTransferMap = C2M_TransferMap.Create();
-                self.Root().GetComponent<ClientSenderComponent>().Call(c2MTransferMap).NoContext();
-            }
         }
         
         private static async ETTask Test1(this OperaComponent self)

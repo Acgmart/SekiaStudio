@@ -112,7 +112,7 @@ namespace ET.Server
                 
                 if (messageLocationSender.ActorId == default)
                 {
-                    messageLocationSender.ActorId = await root.GetComponent<LocationProxyComponent>().Get((int)self.Id, messageLocationSender.Id);
+                    messageLocationSender.ActorId = await root.GetComponent<LocationManagerComoponent>().Get((int)self.Id, messageLocationSender.Id);
                     if (messageLocationSender.InstanceId != instanceId)
                     {
                         throw new RpcException(ErrorCode.ERR_ActorLocationSenderTimeout2, $"{message}");
@@ -143,7 +143,7 @@ namespace ET.Server
 
                 if (messageLocationSender.ActorId == default)
                 {
-                    messageLocationSender.ActorId = await root.GetComponent<LocationProxyComponent>().Get((int)self.Id, messageLocationSender.Id);
+                    messageLocationSender.ActorId = await root.GetComponent<LocationManagerComoponent>().Get((int)self.Id, messageLocationSender.Id);
                     if (messageLocationSender.InstanceId != instanceId)
                     {
                         throw new RpcException(ErrorCode.ERR_ActorLocationSenderTimeout2, $"{request}");
@@ -204,7 +204,7 @@ namespace ET.Server
             {
                 if (messageLocationSender.ActorId == default)
                 {
-                    messageLocationSender.ActorId = await root.GetComponent<LocationProxyComponent>().Get((int)self.Id, messageLocationSender.Id);
+                    messageLocationSender.ActorId = await root.GetComponent<LocationManagerComoponent>().Get((int)self.Id, messageLocationSender.Id);
                     if (messageLocationSender.InstanceId != instanceId)
                     {
                         throw new RpcException(ErrorCode.ERR_ActorLocationSenderTimeout2, $"{iRequest}");

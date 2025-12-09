@@ -84,9 +84,8 @@ namespace ET
                 {
                     memoryStream.Seek(Packet.ActorIdLength + Packet.OpcodeLength, SeekOrigin.Begin);
                     byte[] buffer = memoryStream.GetBuffer();
-                    actorId.Process = BitConverter.ToInt32(buffer, Packet.ActorIdIndex);
-                    actorId.Fiber = BitConverter.ToInt32(buffer, Packet.ActorIdIndex + 4);
-                    actorId.InstanceId = BitConverter.ToInt64(buffer, Packet.ActorIdIndex + 8);
+                    actorId.Fiber = BitConverter.ToInt32(buffer, Packet.ActorIdIndex);
+                    actorId.InstanceId = BitConverter.ToInt64(buffer, Packet.ActorIdIndex + 4);
                     ushort opcode = BitConverter.ToUInt16(buffer, Packet.ActorIdLength);
                     Type type = OpcodeType.Instance.GetType(opcode);
                     message = Deserialize(type, memoryStream);

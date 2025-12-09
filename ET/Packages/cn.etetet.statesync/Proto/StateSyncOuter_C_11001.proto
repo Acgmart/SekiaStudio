@@ -156,19 +156,6 @@ message M2C_TestRobotCase2 // ILocationMessage
 	int32 N = 2;
 }
 
-// ResponseType M2C_TransferMap
-message C2M_TransferMap // ILocationRequest
-{
-	int32 RpcId = 1;
-}
-
-message M2C_TransferMap // ILocationResponse
-{
-	int32 RpcId = 1;
-	int32 Error = 2;
-	string Message = 3;
-}
-
 // ResponseType G2C_Benchmark
 message C2G_Benchmark // ISessionRequest
 {

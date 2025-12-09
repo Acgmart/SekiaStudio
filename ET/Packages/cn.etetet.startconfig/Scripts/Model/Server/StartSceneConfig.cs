@@ -113,7 +113,7 @@ namespace ET
 
         public override void EndInit()
         {
-            this.ActorId = new ActorId(this.Process, this.Id, 1);
+            this.ActorId = new ActorId(this.Id, 1);
             this.Type = SceneTypeSingleton.Instance.GetSceneType(this.SceneType);
         }
     }

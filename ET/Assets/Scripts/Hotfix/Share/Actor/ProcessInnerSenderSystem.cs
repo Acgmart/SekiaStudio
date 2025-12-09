@@ -97,13 +97,6 @@ namespace ET
         private static bool SendInner(this ProcessInnerSender self, ActorId actorId, MessageObject message)
         {
             Fiber fiber = self.Fiber();
-            
-            // 如果发向同一个进程，则扔到消息队列中
-            if (actorId.Process != fiber.Process)
-            {
-                throw new Exception($"actor inner process diff: {actorId.Process} {fiber.Process}");
-            }
-            
             return MessageQueue.Instance.Send(fiber.Address, actorId, message);
         }
 
@@ -128,11 +121,6 @@ namespace ET
             }
             
             Fiber fiber = self.Fiber();
-            if (fiber.Process != actorId.Process)
-            {
-                throw new Exception($"actor inner process diff: {actorId.Process} {fiber.Process}");
-            }
-
             Type requestType = request.GetType();
             
             IResponse response;
