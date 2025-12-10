@@ -22,9 +22,8 @@ namespace ET
 
     public static partial class InnerProto2CS
     {
-        private static string clientMessagePath;
-        private static string serverMessagePath;
-        private static string clientServerMessagePath;
+        private const string clientServerMessagePath = "Assets/Scripts/Model/ProtoCS";
+        private const string protoPath = "Assets/Res/Proto";
         private static readonly char[] splitChars = [' ', '\t'];
         private static readonly List<OpcodeInfo> msgOpcode = [];
         private static List<int> opcodeList = new List<int>();
@@ -33,37 +32,24 @@ namespace ET
         {
             //设置当前路径为Unity工程根目录
             string currentDir = Directory.GetCurrentDirectory();
-            if (currentDir.EndsWith("Packages\\cn.etetet.proto\\DotNet~\\Exe"))
+            if (currentDir.EndsWith("Assets\\Scripts\\Plugins\\DotNet~\\ET.Proto2CS\\Exe"))
             {
-                currentDir = currentDir.Substring(0, currentDir.IndexOf("Packages"));
+                currentDir = currentDir.Substring(0, currentDir.IndexOf("Assets"));
                 Directory.SetCurrentDirectory(currentDir);
             }
 
             msgOpcode.Clear();
             opcodeList.Clear();
 
-            PackagesLock packagesLock = PackageHelper.LoadEtPackagesLock("./");
-            PackageInfo protoPackage = packagesLock.dependencies["cn.etetet.proto"];
-            clientMessagePath = Path.Combine(protoPackage.dir, "CodeMode/Model/Client");
-            serverMessagePath = Path.Combine(protoPackage.dir, "CodeMode/Model/Server");
-            clientServerMessagePath = Path.Combine(protoPackage.dir, "CodeMode/Model/ClientServer");
-            
-            List<(string, string)> list = new ();
-            foreach ((string key, PackageInfo packageInfo) in packagesLock.dependencies)
+            List<string> list = new ();
+            if (!Directory.Exists(protoPath))
+                Directory.CreateDirectory(protoPath);
+            foreach (var f in FileHelper.GetAllFiles(protoPath, "*.proto"))
             {
-                string p = Path.Combine(packageInfo.dir, "Proto");
-                if (!Directory.Exists(p))
-                {
-                    continue;
-                }
-                
-                foreach (var f in FileHelper.GetAllFiles(p, "*.proto"))
-                {
-                    list.Add((f, packageInfo.module));
-                }
+                list.Add(f);
             }
             
-            foreach ((string s, string module) in list)
+            foreach (string s in list)
             {
                 if (!s.EndsWith(".proto"))
                 {
@@ -73,13 +59,12 @@ namespace ET
                 string fileName = Path.GetFileNameWithoutExtension(s);
                 string[] ss2 = fileName.Split('_');
                 string protoName = ss2[0];
-                string cs = ss2[1];
                 int startOpcode = int.Parse(ss2[2]);
-                ProtoFile2CS(s, module, protoName, cs, startOpcode);
+                ProtoFile2CS(s, protoName, startOpcode);
             }
         }
 
-        private static void ProtoFile2CS(string path, string module, string protoName, string cs, int startOpcode)
+        private static void ProtoFile2CS(string path, string protoName, int startOpcode)
         {
             msgOpcode.Clear();
 
@@ -246,18 +231,7 @@ namespace ET
             sb.Replace("\t", "    ");
             string result = sb.ToString().ReplaceLineEndings("\r\n");
 
-            if (cs.Contains('C'))
-            {
-                GenerateCS(result, clientMessagePath, proto);
-                GenerateCS(result, serverMessagePath, proto);
-                GenerateCS(result, clientServerMessagePath, proto);
-            }
-
-            if (cs.Contains('S'))
-            {
-                GenerateCS(result, serverMessagePath, proto);
-                GenerateCS(result, clientServerMessagePath, proto);
-            }
+            GenerateCS(result, clientServerMessagePath, proto);
         }
 
         private static void GenerateCS(string result, string path, string proto)

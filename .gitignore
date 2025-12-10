@@ -20,23 +20,14 @@ ET/*.sln
 ET/*.sln.DotSettings.user
 
 # 协议 - 目录中存在.asmref文件
-ET/Packages/cn.etetet.proto/CodeMode/*/*/*.cs
-ET/Packages/cn.etetet.proto/CodeMode/*/*/*.cs.meta
-ET/Packages/cn.etetet.proto/CodeMode.meta
-ET/Packages/cn.etetet.proto/CodeMode/Model.meta
-ET/Packages/cn.etetet.proto/CodeMode/Model/Client.meta
-ET/Packages/cn.etetet.proto/CodeMode/Model/ClientServer.meta
-ET/Packages/cn.etetet.proto/CodeMode/Model/Server.meta
+ET/Assets/Scripts/Model/ProtoCS/*.cs
+ET/Assets/Scripts/Model/ProtoCS/*.cs.meta
 
 # 表格配置Json版本.txt文件和二进制.bytes文件
-ET/Packages/cn.etetet.excel/CodeMode/Model/*/*.cs
-ET/Packages/cn.etetet.excel/CodeMode/Model/*/*.cs.meta
-ET/Packages/cn.etetet.excel/Config/Json/cs/
-ET/Packages/cn.etetet.excel/Config/Json/c/
-ET/Packages/cn.etetet.excel/Config/Json/s/
-ET/Packages/cn.etetet.excel/Config/Bytes/cs/
-ET/Packages/cn.etetet.excel/Config/Bytes/c/
-ET/Packages/cn.etetet.excel/Config/Bytes/s/
+ET/Assets/Scripts/Model/ExcelConfig/*.cs
+ET/Assets/Scripts/Model/ExcelConfig/*.cs.meta
+ET/Assets/Res/Config/Json/
+ET/Assets/Res/Config/Bytes/
 
 # 服务端or双端共享dll
 ET/Assets/Scripts/Plugins/DotNet~/ET.ExcelExporter/Exe/

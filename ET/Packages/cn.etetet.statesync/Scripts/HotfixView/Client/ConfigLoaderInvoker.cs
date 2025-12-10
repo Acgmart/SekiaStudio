@@ -12,48 +12,29 @@ namespace ET
         {
             Dictionary<Type, byte[]> output = new Dictionary<Type, byte[]>();
             HashSet<Type> configTypes = CodeTypes.Instance.GetTypes(typeof (ConfigAttribute));
-            
-            {
-                string ct = "cs";
-                GlobalConfig globalConfig = Resources.Load<GlobalConfig>("GlobalConfig");
-                CodeMode codeMode = globalConfig.CodeMode;
-                switch (codeMode)
+
+            List<string> startConfigs = new List<string>()
                 {
-                    case CodeMode.Client:
-                        ct = "c";
-                        break;
-                    case CodeMode.Server:
-                        ct = "s";
-                        break;
-                    case CodeMode.ClientServer:
-                        ct = "cs";
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-                List<string> startConfigs = new List<string>()
-                {
-                    "StartMachineConfigCategory", 
-                    "StartProcessConfigCategory", 
-                    "StartSceneConfigCategory", 
+                    "StartMachineConfigCategory",
+                    "StartProcessConfigCategory",
+                    "StartSceneConfigCategory",
                     "StartZoneConfigCategory",
                 };
-                foreach (Type configType in configTypes)
-                {
-                    string configFilePath;
-                    if (startConfigs.Contains(configType.Name))
-                    {
-                        configFilePath = $"{ConstValue.ExcelPackagePath}/Config/Bytes/{ct}/{Options.Instance.StartConfig}/{configType.Name}.bytes";    
-                    }
-                    else
-                    {
-                        configFilePath = $"{ConstValue.ExcelPackagePath}/Config/Bytes/{ct}/{configType.Name}.bytes";
-                    }
-                    TextAsset v = await ResourcesComponent.Instance.LoadAssetAsync<TextAsset>(configFilePath);
-                    output[configType] = v.bytes;
-                }
-            }
 
+            foreach (Type configType in configTypes)
+            {
+                string configFilePath;
+                if (startConfigs.Contains(configType.Name))
+                {
+                    configFilePath = $"Assets/Res/Config/Bytes/{Options.Instance.StartConfig}/{configType.Name}.bytes";
+                }
+                else
+                {
+                    configFilePath = $"Assets/Res/Config/Bytes/{configType.Name}.bytes";
+                }
+                TextAsset v = await ResourcesComponent.Instance.LoadAssetAsync<TextAsset>(configFilePath);
+                output[configType] = v.bytes;
+            }
             return output;
         }
     }
@@ -63,23 +44,6 @@ namespace ET
     {
         public override async ETTask<byte[]> Handle(ConfigLoader.GetOneConfigBytes args)
         {
-            string ct = "cs";
-            GlobalConfig globalConfig = Resources.Load<GlobalConfig>("GlobalConfig");
-            CodeMode codeMode = globalConfig.CodeMode;
-            switch (codeMode)
-            {
-                case CodeMode.Client:
-                    ct = "c";
-                    break;
-                case CodeMode.Server:
-                    ct = "s";
-                    break;
-                case CodeMode.ClientServer:
-                    ct = "cs";
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
             List<string> startConfigs = new List<string>()
             {
                 "StartMachineConfigCategory", 
@@ -89,15 +53,14 @@ namespace ET
             };
 
             string configName = args.ConfigName;
-                
             string configFilePath;
             if (startConfigs.Contains(configName))
             {
-                configFilePath = $"{ConstValue.ExcelPackagePath}/Config/Bytes/{ct}/{Options.Instance.StartConfig}/{configName}.bytes";    
+                configFilePath = $"Assets/Res/Config/Bytes/{Options.Instance.StartConfig}/{configName}.bytes";    
             }
             else
             {
-                configFilePath = $"{ConstValue.ExcelPackagePath}/Config/Bytes/{ct}/{configName}.bytes";
+                configFilePath = $"Assets/Res/Config/Bytes/{configName}.bytes";
             }
 
             await ETTask.CompletedTask;

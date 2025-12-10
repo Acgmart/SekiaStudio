@@ -6,7 +6,7 @@ namespace ET
 {
     public static class ProtoEditor
     {
-        [MenuItem("ET/Proto/Proto2CS")]
+        [MenuItem("ET/Init/Proto2CS")]
         public static void Run()
         {
             if (!File.Exists("./Assets/Scripts/Plugins/DotNet~/ET.Proto2CS/Exe/ET.Proto2CS.dll"))

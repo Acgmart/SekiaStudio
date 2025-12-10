@@ -5,7 +5,7 @@ namespace ET
 {
     public static class InitHelper
     {
-        [MenuItem("ET/StateSync/Init")]
+        [MenuItem("ET/Init/InitAll", false, 0)]
         public static void Init()
         {
             ExcelEditor.Init();

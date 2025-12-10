@@ -29,8 +29,8 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Packages/cn.etetet.excel/Config/Bytes/cs
-        CollectorGUID: c5cd9113859bb9d4493fbf7f503a445b
+      - CollectPath: Assets/Res/Config/Bytes
+        CollectorGUID: fc9a22d4d1601c04ebe11a9b05d6a62b
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory

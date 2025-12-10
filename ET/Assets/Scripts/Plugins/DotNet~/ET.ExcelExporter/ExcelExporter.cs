@@ -16,25 +16,16 @@ using LicenseContext = OfficeOpenXml.LicenseContext;
 
 namespace ET
 {
-    public enum ConfigType
-    {
-        c = 0,
-        s = 1,
-        cs = 2,
-    }
-
     class HeadInfo
     {
         [BsonElement]
-        public string FieldCS;
         public string FieldDesc;
         public string FieldName;
         public string FieldType;
         public int FieldIndex;
 
-        public HeadInfo(string cs, string desc, string name, string type, int index)
+        public HeadInfo(string desc, string name, string type, int index)
         {
-            this.FieldCS = cs;
             this.FieldDesc = desc;
             this.FieldName = name;
             this.FieldType = type;
@@ -46,8 +37,6 @@ namespace ET
     class Table
     {
         public string Name;
-        public bool C;
-        public bool S;
         public int Index;
         public Dictionary<string, HeadInfo> HeadInfos = new();
     }
@@ -55,17 +44,12 @@ namespace ET
     [EnableClass]
     public static class ExcelExporter
     {
+        private const string excelPath = "Assets/Res/Excel";
         private static string template;
-
-        private static string ClientClassDir;
-        // 服务端因为机器人的存在必须包含客户端所有配置，所以单独的c字段没有意义,单独的c就表示cs
-        private static string ServerClassDir;
-        private static string CSClassDir;
-
-        private const string jsonDir = "./Packages/cn.etetet.excel/Config/Json";
-
-        private const string serverProtoDir = "./Packages/cn.etetet.excel/Config/Bytes";
-        private static Assembly[] configAssemblies = new Assembly[3];
+        private const string excelConfigExportDir = "./Assets/Scripts/Model/ExcelConfig";
+        private const string jsonDir = "./Assets/Res/Config/Json";
+        private const string bytesDir = "./Assets/Res/Config/Bytes";
+        private static Assembly configAssemblie = null;
 
         private static Dictionary<string, Table> tables = new();
         private static Dictionary<string, ExcelPackage> packages = new();
@@ -97,11 +81,14 @@ namespace ET
 
         public static void Export()
         {
+            //避免裁剪
+            Console.WriteLine(MongoDB.Bson.BsonString.Empty);
+
             //设置当前路径为Unity工程根目录
             string currentDir = Directory.GetCurrentDirectory();
             if (currentDir.EndsWith("Assets\\Scripts\\Plugins\\DotNet~\\ET.ExcelExporter\\Exe"))
             {
-                currentDir = currentDir.Substring(0, currentDir.IndexOf("Packages"));
+                currentDir = currentDir.Substring(0, currentDir.IndexOf("Assets"));
                 Directory.SetCurrentDirectory(currentDir);
             }
 
@@ -110,122 +97,44 @@ namespace ET
                 template = File.ReadAllText("./Assets/Scripts/Plugins/DotNet~/ET.ExcelExporter/Template.txt");
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 
-                PackagesLock packagesLock = PackageHelper.LoadEtPackagesLock("./");
-                PackageInfo excelPackage = packagesLock.dependencies["cn.etetet.excel"];
-                ClientClassDir = Path.Combine(excelPackage.dir, "CodeMode/Model/Client");
-                ServerClassDir = Path.Combine(excelPackage.dir, "CodeMode/Model/Server");
-                CSClassDir = Path.Combine(excelPackage.dir, "CodeMode/Model/ClientServer");
-            
                 if (Directory.Exists(jsonDir))
-                {
                     Directory.Delete(jsonDir, true);
+                Directory.CreateDirectory(jsonDir);
+                if (Directory.Exists(bytesDir))
+                    Directory.Delete(bytesDir, true);
+                Directory.CreateDirectory(bytesDir);
+
+                //.xlsm格式支持保存宏代码
+                List<string> paths = new();
+                foreach (string k in FileHelper.GetAllFiles(excelPath))
+                    if ((k.EndsWith(".xlsx") || k.EndsWith(".xlsm")) &&
+                        !k.StartsWith("~$") &&
+                        !k.Contains("#"))
+                        paths.Add(k);
+
+                //生成.cs文件
+                {
+                    foreach (string path in paths)
+                    {
+                        ExcelPackage p = GetPackage(Path.GetFullPath(path));
+                        string fileName = Path.GetFileName(path);
+                        string protoName = Path.GetFileNameWithoutExtension(fileName);
+                        Table table = GetTable(protoName);
+                        ExportExcelClass(p, protoName, table);
+                    }
+
+                    foreach (var kv in tables)
+                    {
+                        ExportClass(kv.Value);
+                    }
                 }
 
-                if (Directory.Exists(serverProtoDir))
-                {
-                    Directory.Delete(serverProtoDir, true);
-                }
+                //动态编译
+                configAssemblie = DynamicBuild();
                 
-                List<string> list = new();
-                foreach ((string key, PackageInfo packageInfo) in packagesLock.dependencies)
-                {
-                    string p = Path.Combine(packageInfo.dir, "Excel");
-                    if (!Directory.Exists(p))
-                    {
-                        continue;
-                    }
-                    list.Add(p);
-                }
-
-                List<(string, string)> paths = new();
-                foreach (string s in list)
-                {
-                    var aa = FileHelper.GetAllFiles(s);
-                    
-                    foreach (string k in aa)
-                    {
-                        if (k.EndsWith(".xlsx") || k.EndsWith(".xlsm"))
-                        {
-                            paths.Add((s, k));
-                        }
-                    }
-                }
-                
-                foreach ((string s, string path) in paths)
-                {
-                    string fileName = Path.GetFileName(path);
-                    if (!fileName.EndsWith(".xlsx") || fileName.StartsWith("~$") || fileName.Contains("#"))
-                    {
-                        continue;
-                    }
-
-                    string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
-                    
-                    //对Excel名称进行拆分, 移除掉最后一个_后面的文本内容 
-                    if(fileNameWithoutExtension.Contains('_'))
-                    {
-                        fileNameWithoutExtension = fileNameWithoutExtension.Substring(0, fileNameWithoutExtension.LastIndexOf('_'));
-                    }
-
-                    string fileNameWithoutCS = fileNameWithoutExtension;
-                    string cs = "cs";
-                    if (fileNameWithoutExtension.Contains('@'))
-                    {
-                        string[] ss = fileNameWithoutExtension.Split("@");
-                        fileNameWithoutCS = ss[0];
-                        cs = ss[1];
-                    }
-
-                    if (cs == "")
-                    {
-                        cs = "cs";
-                    }
-
-                    ExcelPackage p = GetPackage(Path.GetFullPath(path));
-
-                    string protoName = fileNameWithoutCS;
-                    if (fileNameWithoutCS.Contains('_'))
-                    {
-                        protoName = fileNameWithoutCS.Substring(0, fileNameWithoutCS.LastIndexOf('_'));
-                    }
-
-                    Table table = GetTable(protoName);
-
-                    if (cs.Contains("c"))
-                    {
-                        table.C = true;
-                    }
-
-                    if (cs.Contains("s"))
-                    {
-                        table.S = true;
-                    }
-
-                    ExportExcelClass(p, protoName, table);
-                }
-
-                foreach (var kv in tables)
-                {
-                    if (kv.Value.C)
-                    {
-                        ExportClass(kv.Value, ConfigType.c);
-                    }
-                    if (kv.Value.S)
-                    {
-                        ExportClass(kv.Value, ConfigType.s);
-                    }
-                    ExportClass(kv.Value, ConfigType.cs);
-                }
-
-                // 动态编译生成的配置代码
-                configAssemblies[(int) ConfigType.c] = DynamicBuild(ConfigType.c);
-                configAssemblies[(int) ConfigType.s] = DynamicBuild(ConfigType.s);
-                configAssemblies[(int) ConfigType.cs] = DynamicBuild(ConfigType.cs);
-                
-                foreach ((string s, string path) in paths)
-                {
-                    ExportExcel(s, path);
-                }
+                //导出配置
+                foreach (string path in paths)
+                    ExportExcel(path);
             }
             catch (Exception e)
             {
@@ -238,95 +147,27 @@ namespace ET
                 {
                     kv.Value.Dispose();
                 }
-
                 packages.Clear();
             }
         }
 
-        private static void ExportExcel(string root, string path)
+        private static void ExportExcel(string path)
         {
             string dir = Path.GetDirectoryName(path);
-            string relativePath = Path.GetRelativePath(root, dir);
-            string fileName = Path.GetFileName(path);
-            if (!fileName.EndsWith(".xlsx") || fileName.StartsWith("~$") || fileName.Contains("#"))
-            {
-                return;
-            }
-
-            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
-            
-            //对Excel名称进行拆分, 移除掉最后一个_后面的文本内容 
-            if(fileNameWithoutExtension.Contains('_'))
-            {
-                fileNameWithoutExtension = fileNameWithoutExtension.Substring(0, fileNameWithoutExtension.LastIndexOf('_'));
-            }
-            
-            string fileNameWithoutCS = fileNameWithoutExtension;
-            string cs = "cs";
-            if (fileNameWithoutExtension.Contains('@'))
-            {
-                string[] ss = fileNameWithoutExtension.Split("@");
-                fileNameWithoutCS = ss[0];
-                cs = ss[1];
-            }
-            
-            if (cs == "")
-            {
-                cs = "cs";
-            }
-
-            string protoName = fileNameWithoutCS;
-            if (fileNameWithoutCS.Contains('_'))
-            {
-                protoName = fileNameWithoutCS.Substring(0, fileNameWithoutCS.LastIndexOf('_'));
-            }
-
+            string relativePath = Path.GetRelativePath(excelPath, dir);
+            string protoName = Path.GetFileNameWithoutExtension(path);
             Table table = GetTable(protoName);
-
             ExcelPackage p = GetPackage(Path.GetFullPath(path));
-
-            if (cs.Contains("c"))
-            {
-                ExportExcelJson(p, fileNameWithoutCS, table, ConfigType.c, relativePath);
-                ExportExcelProtobuf(ConfigType.c, table, relativePath);
-            }
-
-            if (cs.Contains("s"))
-            {
-                ExportExcelJson(p, fileNameWithoutCS, table, ConfigType.s, relativePath);
-                ExportExcelProtobuf(ConfigType.s, table, relativePath);
-            }
-            ExportExcelJson(p, fileNameWithoutCS, table, ConfigType.cs, relativePath);
-            ExportExcelProtobuf(ConfigType.cs, table, relativePath);
+            ExportExcelJson(p, protoName, table, relativePath);
+            ExportExcelProtobuf(table, relativePath);
         }
 
-        private static string GetProtoDir(ConfigType configType, string relativeDir)
-        {
-            return Path.Combine(serverProtoDir, configType.ToString(), relativeDir);
-        }
-
-        private static Assembly GetAssembly(ConfigType configType)
-        {
-            return configAssemblies[(int) configType];
-        }
-
-        private static string GetClassDir(ConfigType configType)
-        {
-            return configType switch
-            {
-                ConfigType.c => ClientClassDir,
-                ConfigType.s => ServerClassDir,
-                _ => CSClassDir
-            };
-        }
-        
         // 动态编译生成的cs代码
-        private static Assembly DynamicBuild(ConfigType configType)
+        private static Assembly DynamicBuild()
         {
-            string classPath = GetClassDir(configType);
             List<SyntaxTree> syntaxTrees = new List<SyntaxTree>();
             List<string> protoNames = new List<string>();
-            foreach (string classFile in FileHelper.GetAllFiles(classPath, "*.cs"))
+            foreach (string classFile in FileHelper.GetAllFiles(excelConfigExportDir, "*.cs"))
             {
                 protoNames.Add(Path.GetFileNameWithoutExtension(classFile));
                 syntaxTrees.Add(CSharpSyntaxTree.ParseText(File.ReadAllText(classFile)));
@@ -385,8 +226,8 @@ namespace ET
         }
 
 
-        #region 导出class
-
+        #region 生成.cs文件
+        //const和enum直接生成.cs文件 class先收集字段
         static void ExportExcelClass(ExcelPackage p, string name, Table table)
         {
             foreach (ExcelWorksheet worksheet in p.Workbook.Worksheets)
@@ -407,6 +248,7 @@ namespace ET
             }
         }
 
+        //收集表格字段
         static void ExportSheetClass(ExcelWorksheet worksheet, Table table)
         {
             const int row = 2;
@@ -428,44 +270,24 @@ namespace ET
                     continue;
                 }
 
-                string fieldCS = worksheet.Cells[row, col].Text.Trim().ToLower();
-                if (fieldCS.Contains("#"))
+                string fieldTag = worksheet.Cells[row, col].Text.Trim().ToLower();
+                if (fieldTag.Contains("#")) //注释
                 {
                     table.HeadInfos[fieldName] = null;
                     continue;
                 }
                 
-                if (fieldCS == "")
-                {
-                    fieldCS = "cs";
-                }
-
-                if (table.HeadInfos.TryGetValue(fieldName, out var oldClassField))
-                {
-                    if (oldClassField.FieldCS != fieldCS)
-                    {
-                        Console.WriteLine($"field cs not same: {worksheet.Name} {fieldName} oldcs: {oldClassField.FieldCS} {fieldCS}");
-                    }
-
-                    continue;
-                }
-
                 string fieldDesc = worksheet.Cells[row + 1, col].Text.Trim();
                 string fieldType = worksheet.Cells[row + 3, col].Text.Trim();
 
-                table.HeadInfos[fieldName] = new HeadInfo(fieldCS, fieldDesc, fieldName, fieldType, ++table.Index);
+                table.HeadInfos[fieldName] = new HeadInfo(fieldDesc, fieldName, fieldType, ++table.Index);
             }
         }
-
-        static void ExportClass(Table table, ConfigType configType)
+        
+        //生成.cs文件
+        static void ExportClass(Table table)
         {
-            string dir = GetClassDir(configType);
-            if (!Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
-
-            string exportPath = Path.Combine(dir, $"{table.Name}.cs");
+            string exportPath = Path.Combine(excelConfigExportDir, $"{table.Name}.cs");
 
             if (!Directory.Exists(Path.GetDirectoryName(exportPath)))
             {
@@ -483,11 +305,6 @@ namespace ET
                     continue;
                 }
 
-                if (configType != ConfigType.cs && !headInfo.FieldCS.Contains(configType.ToString()))
-                {
-                    continue;
-                }
-
                 sb.Append($"\t\t/// <summary>{headInfo.FieldDesc}</summary>\n");
                 string fieldType = headInfo.FieldType;
                 sb.Append($"\t\tpublic {fieldType} {headInfo.FieldName} {{ get; set; }}\n");
@@ -499,11 +316,7 @@ namespace ET
             sw.Write(content);
         }
 
-        #endregion
-
-        #region 导出Const 和 Enum
-
-        // 导出常量数据
+        //生成.cs文件
         static void ExportConstClass(ExcelWorksheet worksheet)
         {
             const int row = 2;
@@ -517,17 +330,12 @@ namespace ET
                     continue;
                 }
 
-                string fieldCS = worksheet.Cells[row, col].Text.Trim().ToLower();
-                if (fieldCS.Contains('#'))
+                string fieldTag = worksheet.Cells[row, col].Text.Trim().ToLower();
+                if (fieldTag.Contains('#'))
                 {
                     continue;
                 }
                 
-                if (fieldCS == "")
-                {
-                    fieldCS = "cs";
-                }
-
                 string fieldType = worksheet.Cells[row + 3, col].Text.Trim();
 
                 if (fieldType.ToLower() == "const")
@@ -562,46 +370,26 @@ namespace ET
             
             string cs = worksheet.Cells[1, 1].Text.Trim();
             
-            List<ConfigType> listTypes = new List<ConfigType>() { ConfigType.cs , ConfigType.c, ConfigType.s };
-            if (cs == "c")
-            {
-                listTypes.Remove(ConfigType.s);
-            }
-            else if (cs == "s")
-            {
-                listTypes.Remove(ConfigType.c);
-            }
+            string ename = worksheet.Name.Substring(7); // #const_ 7个字符
+            string exportPath = Path.Combine(excelConfigExportDir, $"{ename}.cs");
 
-            foreach (var configType in listTypes)
+            using FileStream txt = new FileStream(exportPath, FileMode.Create);
+            using StreamWriter sw = new StreamWriter(txt);
+
+            //生成常量
+            sw.WriteLine("namespace ET");
+            sw.WriteLine("{");
+            sw.WriteLine($"    public static partial class {ename}");
+            sw.WriteLine("    {");
+            for (int i = 0; i < listConst.Count; i++)
             {
-                string dir = GetClassDir(configType);
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
-    
-                string ename = worksheet.Name.Substring(7); // #const_ 7个字符
-                string exportPath = Path.Combine(dir, $"{ename}.cs");
-    
-                using FileStream txt = new FileStream(exportPath, FileMode.Create);
-                using StreamWriter sw = new StreamWriter(txt);
-    
-                //生成常量
-                sw.WriteLine("namespace ET");
-                sw.WriteLine("{");
-                sw.WriteLine($"    public static partial class {ename}");
-                sw.WriteLine("    {");
-                for(int i = 0 ; i < listConst.Count ; i++)
-                {
-                    sw.WriteLine(listConst[i]);
-                }
-                sw.WriteLine("    }");
-                sw.WriteLine("}");
+                sw.WriteLine(listConst[i]);
             }
+            sw.WriteLine("    }");
+            sw.WriteLine("}");
         }
-        
-        
-        // 导出枚举数据
+
+        //生成.cs文件
         static void ExportEnumClass(ExcelWorksheet worksheet)
         {
             const int row = 2;
@@ -615,17 +403,12 @@ namespace ET
                     continue;
                 }
 
-                string fieldCS = worksheet.Cells[row, col].Text.Trim().ToLower();
-                if (fieldCS.Contains('#'))
+                string fieldTag = worksheet.Cells[row, col].Text.Trim().ToLower();
+                if (fieldTag.Contains('#'))
                 {
                     continue;
                 }
                 
-                if (fieldCS == "")
-                {
-                    fieldCS = "cs";
-                }
-
                 string fieldType = worksheet.Cells[row + 3, col].Text.Trim();
 
                 if (fieldType.ToLower() == "enum")
@@ -652,52 +435,30 @@ namespace ET
             
             
             string cs = worksheet.Cells[1, 1].Text.Trim();
-            
-            List<ConfigType> listTypes = new List<ConfigType>() { ConfigType.cs , ConfigType.c, ConfigType.s };
-            if (cs == "c")
-            {
-                listTypes.Remove(ConfigType.s);
-            }
-            else if (cs == "s")
-            {
-                listTypes.Remove(ConfigType.c);
-            }
 
-            foreach (var configType in listTypes)
+            string ename = worksheet.Name.Substring(6); // #enum_ 6个字符
+            string exportPath = Path.Combine(excelConfigExportDir, $"{ename}.cs");
+
+            using FileStream txt = new FileStream(exportPath, FileMode.Create);
+            using StreamWriter sw = new StreamWriter(txt);
+
+            //生成枚举
+            sw.WriteLine("namespace ET");
+            sw.WriteLine("{");
+            sw.WriteLine($"    public enum {ename}");
+            sw.WriteLine("    {");
+            for (int i = 0; i < listEnums.Count; i++)
             {
-                string dir = GetClassDir(configType);
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
-    
-                string ename = worksheet.Name.Substring(6); // #enum_ 6个字符
-                string exportPath = Path.Combine(dir, $"{ename}.cs");
-    
-                using FileStream txt = new FileStream(exportPath, FileMode.Create);
-                using StreamWriter sw = new StreamWriter(txt);
-    
-                //生成枚举
-                sw.WriteLine("namespace ET");
-                sw.WriteLine("{");
-                sw.WriteLine($"    public enum {ename}");
-                sw.WriteLine("    {");
-                for(int i = 0 ; i < listEnums.Count ; i++)
-                {
-                    sw.WriteLine(listEnums[i]);
-                }
-                sw.WriteLine("    }");
-                sw.WriteLine("}");
+                sw.WriteLine(listEnums[i]);
             }
+            sw.WriteLine("    }");
+            sw.WriteLine("}");
         }
-        
-
         #endregion
 
         #region 导出json
 
-
-        static void ExportExcelJson(ExcelPackage p, string name, Table table, ConfigType configType, string relativeDir)
+        static void ExportExcelJson(ExcelPackage p, string name, Table table, string relativeDir)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("{\"dict\": [\n");
@@ -708,12 +469,12 @@ namespace ET
                     continue;
                 }
 
-                ExportSheetJson(worksheet, name, table, configType, sb);
+                ExportSheetJson(worksheet, name, table, sb);
             }
 
             sb.Append("]}\n");
 
-            string dir = Path.Combine(jsonDir, configType.ToString(), relativeDir);
+            string dir = Path.Combine(jsonDir, relativeDir);
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
@@ -725,24 +486,12 @@ namespace ET
             sw.Write(sb.ToString());
         }
 
-        static void ExportSheetJson(ExcelWorksheet worksheet, string name, 
-                Table table, ConfigType configType, StringBuilder sb)
+        static void ExportSheetJson(ExcelWorksheet worksheet, string name, Table table, StringBuilder sb)
         {
-            string configTypeStr = configType.ToString();
             for (int row = 6; row <= worksheet.Dimension.End.Row; ++row)
             {
                 string prefix = worksheet.Cells[row, 2].Text.Trim();
                 if (prefix.Contains("#"))
-                {
-                    continue;
-                }
-
-                if (prefix == "")
-                {
-                    prefix = "cs";
-                }
-                
-                if (configType != ConfigType.cs && !prefix.Contains(configTypeStr))
                 {
                     continue;
                 }
@@ -768,11 +517,6 @@ namespace ET
                         continue;
                     }
 
-                    if (configType != ConfigType.cs && !headInfo.FieldCS.Contains(configTypeStr))
-                    {
-                        continue;
-                    }
-
                     string fieldN = headInfo.FieldName;
                     if (fieldN == "Id")
                     {
@@ -786,6 +530,9 @@ namespace ET
             }
         }
 
+        #endregion
+
+        //处理类型默认值
         private static string Convert(string type, string value)
         {
             switch (type)
@@ -832,25 +579,21 @@ namespace ET
             }
         }
 
-        #endregion
-
-
         // 根据生成的类，把json转成protobuf
-        private static void ExportExcelProtobuf(ConfigType configType, Table table, string relativeDir)
+        private static void ExportExcelProtobuf(Table table, string relativeDir)
         {
-            string dir = GetProtoDir(configType, relativeDir);
+            string dir = Path.Combine(bytesDir, relativeDir);
             string moduleDir = Path.Combine(dir);
             if (!Directory.Exists(moduleDir))
             {
                 Directory.CreateDirectory(moduleDir);
             }
 
-            Assembly ass = GetAssembly(configType);
-            Type type = ass.GetType($"ET.{table.Name}Category");
+            Type type = configAssemblie.GetType($"ET.{table.Name}Category");
 
             IMerge final = Activator.CreateInstance(type) as IMerge;
 
-            string p = Path.Combine(jsonDir, configType.ToString(), relativeDir);
+            string p = Path.Combine(jsonDir, relativeDir);
             string[] ss = Directory.GetFiles(p, $"{table.Name}*.txt");
             List<string> jsonPaths = ss.ToList();
 

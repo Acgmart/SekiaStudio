@@ -6,7 +6,7 @@ namespace ET
 {
     public static class ExcelEditor
     {
-        [MenuItem("ET/Excel/ExcelExporter")]
+        [MenuItem("ET/Init/ExcelExporter")]
         public static void Run()
         {
             if(!File.Exists("./Assets/Scripts/Plugins/DotNet~/ET.ExcelExporter/Exe/ET.ExcelExporter.dll"))
