@@ -1,115 +1,5 @@
 {
   "dependencies": {
-    "cn.etetet.actorlocation": {
-      "version": "file:cn.etetet.actorlocation",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "cn.etetet.ai": {
-      "version": "file:cn.etetet.ai",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "cn.etetet.aoi": {
-      "version": "file:cn.etetet.aoi",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "cn.etetet.loader": {
-      "version": "file:cn.etetet.loader",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "cn.etetet.login": {
-      "version": "file:cn.etetet.login",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "cn.etetet.move": {
-      "version": "file:cn.etetet.move",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "cn.etetet.netinner": {
-      "version": "file:cn.etetet.netinner",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "cn.etetet.numeric": {
-      "version": "file:cn.etetet.numeric",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "cn.etetet.recast": {
-      "version": "file:cn.etetet.recast",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "cn.etetet.referencecollector": {
-      "version": "file:cn.etetet.referencecollector",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "cn.etetet.startconfig": {
-      "version": "file:cn.etetet.startconfig",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "cn.etetet.statesync": {
-      "version": "file:cn.etetet.statesync",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "cn.etetet.actorlocation": "3.0.0",
-        "cn.etetet.loader": "3.0.1",
-        "cn.etetet.unit": "3.0.0",
-        "cn.etetet.recast": "3.0.0",
-        "cn.etetet.numeric": "3.0.0",
-        "cn.etetet.move": "3.0.0",
-        "cn.etetet.aoi": "3.0.0",
-        "cn.etetet.ui": "3.0.0",
-        "cn.etetet.referencecollector": "3.0.0",
-        "cn.etetet.login": "3.0.0",
-        "cn.etetet.netinner": "3.0.0",
-        "cn.etetet.ai": "3.0.0",
-        "cn.etetet.yooassets": "2.3.6",
-        "cn.etetet.startconfig": "3.0.0"
-      }
-    },
-    "cn.etetet.ui": {
-      "version": "file:cn.etetet.ui",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "cn.etetet.unit": {
-      "version": "file:cn.etetet.unit",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "cn.etetet.yooassets": {
-      "version": "file:cn.etetet.yooassets",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.unity.scriptablebuildpipeline": "1.21.25",
-        "com.unity.modules.assetbundle": "1.0.0",
-        "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
-      }
-    },
     "com.unity.burst": {
       "version": "1.8.25",
       "depth": 2,
@@ -205,7 +95,7 @@
     },
     "com.unity.scriptablebuildpipeline": {
       "version": "2.4.3",
-      "depth": 1,
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.test-framework": "1.4.5",
@@ -266,7 +156,7 @@
     },
     "com.unity.modules.assetbundle": {
       "version": "1.0.0",
-      "depth": 1,
+      "depth": 0,
       "source": "builtin",
       "dependencies": {}
     },
@@ -308,13 +198,13 @@
     },
     "com.unity.modules.unitywebrequest": {
       "version": "1.0.0",
-      "depth": 1,
+      "depth": 0,
       "source": "builtin",
       "dependencies": {}
     },
     "com.unity.modules.unitywebrequestassetbundle": {
       "version": "1.0.0",
-      "depth": 1,
+      "depth": 0,
       "source": "builtin",
       "dependencies": {
         "com.unity.modules.assetbundle": "1.0.0",
