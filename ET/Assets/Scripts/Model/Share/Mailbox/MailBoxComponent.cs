@@ -19,16 +19,16 @@
         }
 
         // 加到mailbox
-        public static void Add(this MailBoxComponent self, Address fromAddress, MessageObject messageObject)
+        public static void Add(this MailBoxComponent self, int fiberId, MessageObject messageObject)
         {
             // 根据mailboxType进行分发处理
-            EventSystem.Instance.Invoke(self.MailBoxType, new MailBoxInvoker() {MailBoxComponent = self, MessageObject = messageObject, FromAddress = fromAddress});
+            EventSystem.Instance.Invoke(self.MailBoxType, new MailBoxInvoker() {MailBoxComponent = self, MessageObject = messageObject, FiberId = fiberId });
         }
     }
 
     public struct MailBoxInvoker
     {
-        public Address FromAddress;
+        public int FiberId;
         public MessageObject MessageObject;
         public MailBoxComponent MailBoxComponent;
     }

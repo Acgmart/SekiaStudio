@@ -41,7 +41,7 @@ namespace ET.Client
             self.netClientActorId = new ActorId(self.fiberId);
 
             Main2NetClient_Login main2NetClientLogin = Main2NetClient_Login.Create();
-            main2NetClientLogin.OwnerFiberId = self.Fiber().Id;
+            main2NetClientLogin.OwnerFiberId = self.Fiber().FiberId;
             main2NetClientLogin.Account = account;
             main2NetClientLogin.Password = password;
             main2NetClientLogin.Address = address;

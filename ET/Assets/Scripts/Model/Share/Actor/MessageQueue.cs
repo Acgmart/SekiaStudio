@@ -19,21 +19,21 @@ namespace ET
 
         public bool Send(ActorId actorId, MessageObject messageObject)
         {
-            return this.Send(actorId.Address, actorId, messageObject);
+            return this.Send(actorId.FiberId, actorId, messageObject);
         }
         
         public void Reply(ActorId actorId, MessageObject messageObject)
         {
-            this.Send(actorId.Address, actorId, messageObject);
+            this.Send(actorId.FiberId, actorId, messageObject);
         }
         
-        public bool Send(Address fromAddress, ActorId actorId, MessageObject messageObject)
+        public bool Send(int fiberId, ActorId actorId, MessageObject messageObject)
         {
-            if (!this.messages.TryGetValue(actorId.Address.Fiber, out var queue))
+            if (!this.messages.TryGetValue(actorId.FiberId, out var queue))
             {
                 return false;
             }
-            queue.Enqueue(new MessageInfo() {ActorId = new ActorId(fromAddress, actorId.InstanceId), MessageObject = messageObject});
+            queue.Enqueue(new MessageInfo() {ActorId = new ActorId(fiberId, actorId.InstanceId), MessageObject = messageObject});
             return true;
         }
         

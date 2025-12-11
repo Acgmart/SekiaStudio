@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package ET;
-
-message G2M_SessionDisconnect // ILocationMessage
-{
-	int32 RpcId = 1;
-}

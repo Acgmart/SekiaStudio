@@ -9,14 +9,14 @@ namespace ET
         private static void Destroy(this ProcessInnerSender self)
         {
             Fiber fiber = self.Fiber();
-            MessageQueue.Instance.RemoveQueue(fiber.Id);
+            MessageQueue.Instance.RemoveQueue(fiber.FiberId);
         }
 
         [EntitySystem]
         private static void Awake(this ProcessInnerSender self)
         {
             Fiber fiber = self.Fiber();
-            MessageQueue.Instance.AddQueue(fiber.Id);
+            MessageQueue.Instance.AddQueue(fiber.FiberId);
         }
 
         [EntitySystem]
@@ -24,7 +24,7 @@ namespace ET
         {
             self.list.Clear();
             Fiber fiber = self.Fiber();
-            MessageQueue.Instance.Fetch(fiber.Id, 1000, self.list);
+            MessageQueue.Instance.Fetch(fiber.FiberId, 1000, self.list);
 
             foreach (MessageInfo actorMessageInfo in self.list)
             {
@@ -47,15 +47,15 @@ namespace ET
             MailBoxComponent mailBoxComponent = entity as MailBoxComponent;
             if (mailBoxComponent == null)
             {
-                Log.Warning($"actor not found mailbox, from: {actorId} current: {fiber.Address} {message}");
+                Log.Warning($"actor not found mailbox, from: {actorId} current: {fiber.FiberId} {message}");
                 if (message is IRequest request)
                 {
                     IResponse resp = MessageHelper.CreateResponse(request.GetType(), request.RpcId, ErrorCode.ERR_NotFoundActor);
-                    self.Reply(actorId.Address, resp);
+                    self.Reply(actorId.FiberId, resp);
                 }
                 return;
             }
-            mailBoxComponent.Add(actorId.Address, message);
+            mailBoxComponent.Add(actorId.FiberId, message);
         }
 
         private static void HandleIActorResponse(this ProcessInnerSender self, IResponse response)
@@ -84,9 +84,9 @@ namespace ET
             self.SetResult(response);
         }
         
-        public static void Reply(this ProcessInnerSender self, Address fromAddress, IResponse message)
+        public static void Reply(this ProcessInnerSender self, int fiberId, IResponse message)
         {
-            self.SendInner(new ActorId(fromAddress, 0), (MessageObject)message);
+            self.SendInner(new ActorId(fiberId, 0), (MessageObject)message);
         }
 
         public static void Send(this ProcessInnerSender self, ActorId actorId, IMessage message)
@@ -97,7 +97,7 @@ namespace ET
         private static bool SendInner(this ProcessInnerSender self, ActorId actorId, MessageObject message)
         {
             Fiber fiber = self.Fiber();
-            return MessageQueue.Instance.Send(fiber.Address, actorId, message);
+            return MessageQueue.Instance.Send(fiber.FiberId, actorId, message);
         }
 
         private static int GetRpcId(this ProcessInnerSender self)

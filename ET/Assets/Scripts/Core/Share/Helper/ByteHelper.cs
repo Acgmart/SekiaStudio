@@ -69,7 +69,7 @@ namespace ET
 		
 		public static void WriteTo(this byte[] bytes, int offset, ActorId num)
 		{
-			bytes.WriteTo(offset, num.Fiber);
+			bytes.WriteTo(offset, num.FiberId);
 			bytes.WriteTo(offset + 4, num.InstanceId);
 		}
 		

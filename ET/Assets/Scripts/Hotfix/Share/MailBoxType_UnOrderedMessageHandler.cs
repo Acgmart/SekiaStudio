@@ -14,7 +14,7 @@
             
             MessageObject messageObject = args.MessageObject;
             
-            await MessageDispatcher.Instance.Handle(mailBoxComponent.Parent, args.FromAddress, messageObject);
+            await MessageDispatcher.Instance.Handle(mailBoxComponent.Parent, args.FiberId, messageObject);
         }
     }
 }

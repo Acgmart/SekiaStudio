@@ -9,7 +9,7 @@ namespace ET
         public static ActorId GetActorId(this Entity self)
         {
             Fiber root = self.Fiber();
-            return new ActorId(root.Id, self.InstanceId);
+            return new ActorId(root.FiberId, self.InstanceId);
         }
     }
     
@@ -22,19 +22,11 @@ namespace ET
         
         public bool IsDisposed;
         
-        public int Id;
+        public int FiberId;
 
         public int Zone;
 
         public Scene Root { get; }
-
-        public Address Address
-        {
-            get
-            {
-                return new Address(this.Id);
-            }
-        }
 
         public EntitySystem EntitySystem { get; }
         public Mailboxes Mailboxes { get; private set; }
@@ -43,19 +35,19 @@ namespace ET
 
         private readonly Queue<ETTask> frameFinishTasks = new();
         
-        internal Fiber(int id, int zone, int sceneType, string name)
+        internal Fiber(int fiberId, int zone, int sceneType, string name)
         {
-            this.Id = id;
+            this.FiberId = fiberId;
             this.Zone = zone;
             this.EntitySystem = new EntitySystem();
             this.Mailboxes = new Mailboxes();
             this.ThreadSynchronizationContext = new ThreadSynchronizationContext();
 
             LogInvoker logInvoker = new()
-                    { Fiber = this.Id, SceneName = SceneTypeSingleton.Instance.GetSceneName(sceneType) };
+                    { Fiber = this.FiberId, SceneName = SceneTypeSingleton.Instance.GetSceneName(sceneType) };
             this.Log = EventSystem.Instance.Invoke<LogInvoker, ILog>(logInvoker);
             
-            this.Root = new Scene(this, id, 1, sceneType, name);
+            this.Root = new Scene(this, fiberId, 1, sceneType, name);
         }
 
         internal void Update()

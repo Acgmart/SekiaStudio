@@ -28,11 +28,11 @@
                     if (messageObject is IRequest request)
                     {
                         IResponse resp = MessageHelper.CreateResponse(request.GetType(), request.RpcId, ErrorCode.ERR_NotFoundActor);
-                        mailBoxComponent.Root().GetComponent<ProcessInnerSender>().Reply(args.FromAddress, resp);
+                        mailBoxComponent.Root().GetComponent<ProcessInnerSender>().Reply(args.FiberId, resp);
                     }
                     return;
                 }
-                await MessageDispatcher.Instance.Handle(mailBoxComponent.Parent, args.FromAddress, messageObject);
+                await MessageDispatcher.Instance.Handle(mailBoxComponent.Parent, args.FiberId, messageObject);
             }
         }
     }

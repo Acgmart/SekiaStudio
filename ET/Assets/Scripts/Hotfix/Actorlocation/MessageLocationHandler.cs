@@ -6,7 +6,7 @@ namespace ET.Server
     {
         protected abstract ETTask Run(E entity, Message message);
 
-        public async ETTask Handle(Entity entity, Address fromAddress, MessageObject actorMessage)
+        public async ETTask Handle(Entity entity, int fiberId, MessageObject actorMessage)
         {
             Fiber fiber = entity.Fiber();
             if (actorMessage is not Message message)
@@ -23,7 +23,7 @@ namespace ET.Server
             
             MessageResponse response = ObjectPool.Fetch<MessageResponse>();
             response.RpcId = message.RpcId;
-            fiber.Root.GetComponent<ProcessInnerSender>().Reply(fromAddress, response);
+            fiber.Root.GetComponent<ProcessInnerSender>().Reply(fiberId, response);
 
             await this.Run(e, message);
         }
@@ -45,7 +45,7 @@ namespace ET.Server
     {
         protected abstract ETTask Run(E unit, Request request, Response response);
 
-        public async ETTask Handle(Entity entity, Address fromAddress, MessageObject actorMessage)
+        public async ETTask Handle(Entity entity, int fiberId, MessageObject actorMessage)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace ET.Server
                 // 这样会导致send实际上进入了新的协程，从而response却先发送出去了
                 using (await fiber.Root.GetComponent<CoroutineLockComponent>().Wait(CoroutineLockType.MessageLocationSender, entity.Id))
                 {
-                    fiber.Root.GetComponent<ProcessInnerSender>().Reply(fromAddress, response);
+                    fiber.Root.GetComponent<ProcessInnerSender>().Reply(fiberId, response);
                 }
             }
             catch (Exception e)

@@ -77,7 +77,7 @@ namespace ET
             this.messageHandlers[type].Add(handler);
         }
 
-        public async ETTask Handle(Entity entity, Address fromAddress, MessageObject message)
+        public async ETTask Handle(Entity entity, int fiberId, MessageObject message)
         {
             List<MessageDispatcherInfo> list;
             if (!this.messageHandlers.TryGetValue(message.GetType(), out list))
@@ -92,7 +92,7 @@ namespace ET
                 {
                     continue;
                 }
-                await actorMessageDispatcherInfo.IMHandler.Handle(entity, fromAddress, message);   
+                await actorMessageDispatcherInfo.IMHandler.Handle(entity, fiberId, message);   
             }
         }
     }
