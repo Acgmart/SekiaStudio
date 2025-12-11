@@ -32,7 +32,7 @@ namespace ET
             IBsonSerializer<Entity> bsonSerializer = BsonSerializer.LookupSerializer<Entity>();
             foreach ((long _, Entity entity) in childrenCollection)
             {
-                if (entity is ISerializeToEntity || entity.IsSerilizeWithParent)
+                if (entity.IsSerilizeWithParent)
                 {
                     bsonSerializer.Serialize(context, entity);
                 }

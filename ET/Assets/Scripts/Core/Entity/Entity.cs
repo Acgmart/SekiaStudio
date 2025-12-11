@@ -965,7 +965,7 @@ namespace ET
                 return;
             }
             
-            if (this is not ISerializeToEntity && !this.IsSerilizeWithParent)
+            if (!this.IsSerilizeWithParent)
             {
                 return;
             }

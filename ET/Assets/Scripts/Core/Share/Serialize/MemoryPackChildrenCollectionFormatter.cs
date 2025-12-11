@@ -34,7 +34,7 @@ namespace ET
             foreach (var kv in value)
             {
                 Entity entity = kv.Value;
-                if (entity is ISerializeToEntity || entity.IsSerilizeWithParent)
+                if (entity.IsSerilizeWithParent)
                 {
                     ++count;
                     formatter.Serialize(ref writer, ref entity!);
