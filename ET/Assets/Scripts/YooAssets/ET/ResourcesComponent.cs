@@ -39,7 +39,7 @@ namespace ET
 
         protected override void Destroy()
         {
-            YooAssets.OnApplicationQuit();
+            YooAssets.ClearAllPackageOperation();
         }
 
         public async ETTask CreatePackageAsync(string packageName, bool isDefault = false)
