@@ -24,8 +24,6 @@ namespace ET
         
         public int FiberId;
 
-        public int Zone;
-
         public Scene Root { get; }
 
         public EntitySystem EntitySystem { get; }
@@ -35,10 +33,9 @@ namespace ET
 
         private readonly Queue<ETTask> frameFinishTasks = new();
         
-        internal Fiber(int fiberId, int zone, int sceneType, string name)
+        internal Fiber(int fiberId, int sceneType, string name)
         {
             this.FiberId = fiberId;
-            this.Zone = zone;
             this.EntitySystem = new EntitySystem();
             this.Mailboxes = new Mailboxes();
             this.ThreadSynchronizationContext = new ThreadSynchronizationContext();

@@ -61,7 +61,7 @@ namespace ET
             this.fibers = null;
         }
 
-        public async ETTask<int> Create(SchedulerType schedulerType, int fiberId, int zone, int sceneType, string name)
+        public async ETTask<int> Create(SchedulerType schedulerType, int fiberId, int sceneType, string name)
         {
             if (sceneType == 0)
             {
@@ -70,7 +70,7 @@ namespace ET
             
             try
             {
-                Fiber fiber = new(fiberId, zone, sceneType, name);
+                Fiber fiber = new(fiberId, sceneType, name);
 
                 if (!this.fibers.TryAdd(fiberId, fiber))
                 {
@@ -108,10 +108,10 @@ namespace ET
             }
         }
         
-        public async ETTask<int> Create(SchedulerType schedulerType, int zone, int sceneType, string name)
+        public async ETTask<int> Create(SchedulerType schedulerType, int sceneType, string name)
         {
             int fiberId = Interlocked.Increment(ref this.idGenerator);
-            return await this.Create(schedulerType, fiberId, zone, sceneType, name);
+            return await this.Create(schedulerType, fiberId, sceneType, name);
         }
         
         public async ETTask Remove(int id)

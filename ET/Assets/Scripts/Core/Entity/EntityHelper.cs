@@ -1,22 +1,19 @@
-namespace ET
+﻿namespace ET
 {
     public static class EntityHelper
     {
-        public static int Zone(this Entity entity)
-        {
-            return entity.IScene.Fiber.Zone;
-        }
-
+        //节点树上最近的Scene节点
         public static Scene Scene(this Entity entity)
         {
             return entity.IScene as Scene;
         }
-        
+
+        //节点树上最远的Scene节点
         public static Scene Root(this Entity entity)
         {
             return entity.IScene.Fiber.Root;
         }
-        
+
         public static Fiber Fiber(this Entity entity)
         {
             return entity.IScene.Fiber;
