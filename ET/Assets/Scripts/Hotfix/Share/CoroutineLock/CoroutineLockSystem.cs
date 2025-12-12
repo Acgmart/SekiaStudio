@@ -14,7 +14,9 @@
         [EntitySystem]
         private static void Destroy(this CoroutineLock self)
         {
-            self.Scene<CoroutineLockComponent>().RunNextCoroutine(self.type, self.key, self.level + 1);
+            self.GetParent<CoroutineLockQueue>()?
+                .GetParent<CoroutineLockQueueType>()?
+                .GetParent<CoroutineLockComponent>()?.RunNextCoroutine(self.type, self.key, self.level + 1);
             self.type = 0;
             self.key = 0;
             self.level = 0;
