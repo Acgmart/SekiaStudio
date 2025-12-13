@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Options;
 
 namespace ET
 {
-    [FriendOf(typeof (NumericComponent))]
+    [FriendOf(typeof(NumericComponent))]
     public static class NumericComponentSystem
     {
         public static float GetAsFloat(this NumericComponent self, int numericType)
@@ -88,7 +88,7 @@ namespace ET
             self.Insert(final, result, isPublicEvent);
         }
     }
-    
+
     public struct NumbericChange
     {
         public Unit Unit;
@@ -97,8 +97,8 @@ namespace ET
         public long New;
     }
 
-    [ComponentOf(typeof (Unit))]
-    public class NumericComponent: Entity, IAwake, ITransfer
+    [ComponentOf(typeof(Unit))]
+    public class NumericComponent : Entity, IAwake
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<int, long> NumericDic = new Dictionary<int, long>();

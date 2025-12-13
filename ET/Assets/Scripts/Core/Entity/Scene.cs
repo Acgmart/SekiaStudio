@@ -1,17 +1,17 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace ET
 {
     [EnableMethod]
     [ChildOf]
-    public class Scene: Entity, IScene
+    public class Scene : Entity
     {
         [BsonIgnore]
         public Fiber Fiber { get; set; }
-        
+
         public string Name { get; }
-        
+
         public int SceneType
         {
             get;
@@ -38,10 +38,10 @@ namespace ET
         public override void Dispose()
         {
             base.Dispose();
-            
+
             Log.Info($"scene dispose: {this.SceneType} {this.Id} {this.InstanceId}");
         }
-        
+
         protected override string ViewName
         {
             get

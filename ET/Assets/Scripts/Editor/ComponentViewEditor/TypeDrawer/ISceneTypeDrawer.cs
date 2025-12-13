@@ -1,4 +1,4 @@
-#if ENABLE_VIEW
+﻿#if ENABLE_VIEW
 
 using System;
 using System.Reflection;
@@ -8,11 +8,11 @@ using UnityEngine;
 namespace ET
 {
     [TypeDrawer]
-    public class ISceneTypeDrawer: ITypeDrawer
+    public class ISceneTypeDrawer : ITypeDrawer
     {
         public bool HandlesType(Type type)
         {
-            return type == typeof (IScene);
+            return type == typeof(Scene);
         }
 
         public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target)

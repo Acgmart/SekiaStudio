@@ -5,7 +5,7 @@
         //节点树上最近的Scene节点
         public static Scene Scene(this Entity entity)
         {
-            return entity.IScene as Scene;
+            return entity.IScene;
         }
 
         //节点树上最远的Scene节点
