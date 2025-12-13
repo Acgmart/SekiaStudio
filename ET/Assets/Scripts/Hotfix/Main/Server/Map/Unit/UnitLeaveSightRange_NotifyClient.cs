@@ -1,8 +1,8 @@
 ﻿namespace ET.Server
 {
     // 离开视野
-    [Event(SceneType.Map)]
-    public class UnitLeaveSightRange_NotifyClient: AEvent<Scene, UnitLeaveSightRange>
+    [Publish(SceneType.Map)]
+    public class UnitLeaveSightRange_NotifyClient : APublishHandler<UnitLeaveSightRange>
     {
         protected override async ETTask Run(Scene scene, UnitLeaveSightRange args)
         {

@@ -2,8 +2,8 @@
 
 namespace ET.Client
 {
-    [Event(SceneType.Current)]
-    public class ChangePosition_SyncGameObjectPos: AEvent<Scene, ChangePosition>
+    [Publish(SceneType.Current)]
+    public class ChangePosition_SyncGameObjectPos : APublishHandler<ChangePosition>
     {
         protected override async ETTask Run(Scene scene, ChangePosition args)
         {

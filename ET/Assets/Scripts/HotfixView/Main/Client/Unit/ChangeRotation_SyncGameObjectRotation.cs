@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ET.Client
 {
-    [Event(SceneType.Current)]
-    public class ChangeRotation_SyncGameObjectRotation: AEvent<Scene, ChangeRotation>
+    [Publish(SceneType.Current)]
+    public class ChangeRotation_SyncGameObjectRotation : APublishHandler<ChangeRotation>
     {
         protected override async ETTask Run(Scene scene, ChangeRotation args)
         {

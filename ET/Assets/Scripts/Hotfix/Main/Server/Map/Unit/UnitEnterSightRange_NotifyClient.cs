@@ -1,8 +1,8 @@
 ﻿namespace ET.Server
 {
     // 进入视野通知
-    [Event(SceneType.Map)]
-    public class UnitEnterSightRange_NotifyClient: AEvent<Scene, UnitEnterSightRange>
+    [Publish(SceneType.Map)]
+    public class UnitEnterSightRange_NotifyClient : APublishHandler<UnitEnterSightRange>
     {
         protected override async ETTask Run(Scene scene, UnitEnterSightRange args)
         {
@@ -22,7 +22,7 @@
             Unit ub = b.GetParent<Unit>();
 
             MapMessageHelper.NoticeUnitAdd(ua, ub);
-            
+
             await ETTask.CompletedTask;
         }
     }

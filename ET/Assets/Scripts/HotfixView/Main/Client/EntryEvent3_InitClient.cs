@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace ET.Client
 {
-    [Event(SceneType.StateSync)]
-    public class EntryEvent3_InitClient: AEvent<Scene, EntryEvent3>
+    [Publish(SceneType.StateSync)]
+    public class EntryEvent3_InitClient : APublishHandler<EntryEvent3>
     {
         protected override async ETTask Run(Scene root, EntryEvent3 args)
         {
@@ -15,7 +15,7 @@ namespace ET.Client
             root.AddComponent<ResourcesLoaderComponent>();
             root.AddComponent<PlayerComponent>();
             root.AddComponent<CurrentScenesComponent>();
-            
+
             await EventSystem.Instance.PublishAsync(root, new AppStartInitFinish());
         }
     }

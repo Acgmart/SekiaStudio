@@ -2,8 +2,8 @@
 
 namespace ET.Client
 {
-    [Event(SceneType.Current)]
-    public class AfterUnitCreate_CreateUnitView: AEvent<Scene, AfterUnitCreate>
+    [Publish(SceneType.Current)]
+    public class AfterUnitCreate_CreateUnitView : APublishHandler<AfterUnitCreate>
     {
         protected override async ETTask Run(Scene scene, AfterUnitCreate args)
         {
