@@ -3,7 +3,7 @@
 namespace ET.Server
 {
     [Invoke(SceneType.Gate)]
-    public class FiberInit_Gate: AInvokeHandler<FiberInit, ETTask>
+    public class FiberInit_Gate : AInvokeHandler<FiberInit, ETTask>
     {
         public override async ETTask Handle(FiberInit fiberInit)
         {
@@ -18,8 +18,7 @@ namespace ET.Server
             root.AddComponent<LocationProxyComponent>();
             root.AddComponent<MessageLocationSenderComponent>();
 
-            StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.Get((int)root.Id);
-            root.AddComponent<NetComponent, IKcpTransport>(new UdpTransport(startSceneConfig.InnerIPPort));
+            root.AddComponent<NetComponent, IKcpTransport>(new UdpTransport(Options.Instance.InnerIPPort));
 
             root.AddComponent<UnitComponent>();
             root.AddComponent<AOIManagerComponent>();

@@ -24,14 +24,6 @@ namespace ET
         {
         }
 
-        public async ETTask Reload(Type configType)
-        {
-            GetOneConfigBytes getOneConfigBytes = new() { ConfigName = configType.Name };
-            byte[] oneConfigBytes = await EventSystem.Instance.Invoke<GetOneConfigBytes, ETTask<byte[]>>(getOneConfigBytes);
-            LoadOneConfig(configType, oneConfigBytes);
-            ConfigProcess();
-        }
-
         public async ETTask LoadAsync()
         {
             Dictionary<Type, byte[]> configBytes = await EventSystem.Instance.Invoke<GetAllConfigBytes, ETTask<Dictionary<Type, byte[]>>>(new GetAllConfigBytes());
@@ -53,8 +45,6 @@ namespace ET
                 LoadOneConfig(type, configBytes[type]);
             }
 #endif
-
-            ConfigProcess();
         }
 
         private static void LoadOneConfig(Type configType, byte[] oneConfigBytes)
@@ -62,17 +52,6 @@ namespace ET
             object category = MongoHelper.Deserialize(configType, oneConfigBytes, 0, oneConfigBytes.Length);
             ASingleton singleton = category as ASingleton;
             World.Instance.AddSingleton(singleton);
-        }
-
-        private void ConfigProcess()
-        {
-            var hashSet = CodeTypes.Instance.GetTypes(typeof (ConfigProcessAttribute));
-            foreach (Type type in hashSet)
-            {
-                object obj = Activator.CreateInstance(type);
-                ((ISingletonAwake)obj).Awake();
-                World.Instance.AddSingleton((ASingleton)obj);
-            }
         }
     }
 }
