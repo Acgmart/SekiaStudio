@@ -120,10 +120,40 @@ namespace ET.Server
                 }
                 
                 messageLocationSender.LastSendOrRecvTime = TimeInfo.Instance.ServerNow();
-                root.GetComponent<MessageSender>().Send(messageLocationSender.ActorId, message);
+                Send(root.Fiber().FiberId, messageLocationSender.ActorId, message);
             }
         }
 
+        public static void Send(int fiberId, ActorId actorId, IMessage message)
+        {
+            MessageQueue.Instance.Send(fiberId, actorId, (MessageObject)message);
+        }
+        
+        public static async ETTask<IResponse> Call(
+            Scene root,
+            ActorId actorId,
+            IRequest request,
+            bool needException = true
+        )
+        {
+            if (actorId == default)
+            {
+                throw new Exception($"actor id is 0: {request}");
+            }
+            
+            IResponse response = await root.GetComponent<ProcessInnerSender>().Call(actorId, request, needException: needException);
+
+            if (response.Error == ErrorCode.ERR_MessageTimeout)
+            {
+                throw new RpcException(response.Error, $"Rpc error: request, 注意Actor消息超时，请注意查看是否死锁或者没有reply: actorId: {actorId} {request}, response: {response}");
+            }
+            if (needException && ErrorCode.IsRpcNeedThrowException(response.Error))
+            {
+                throw new RpcException(response.Error, $"Rpc error: actorId: {actorId} {request}, response: {response}");
+            }
+            return response;
+        }
+        
         // 发给不会改变位置的actorlocation用这个，这种actor消息不会阻塞发送队列，性能更高，发送过去找不到actor不会重试
         // 发送过去找不到actor不会重试,用此方法，你得保证actor提前注册好了location
         public static async ETTask<IResponse> Call(this MessageLocationSenderOneType self, long entityId, IRequest request)
@@ -152,7 +182,7 @@ namespace ET.Server
             }
 
             messageLocationSender.LastSendOrRecvTime = TimeInfo.Instance.ServerNow();
-            return await root.GetComponent<MessageSender>().Call(messageLocationSender.ActorId, request);
+            return await Call(root, messageLocationSender.ActorId, request);
         }
 
         public static void Send(this MessageLocationSenderOneType self, long entityId, ILocationMessage message)
@@ -215,7 +245,7 @@ namespace ET.Server
                 {
                     return MessageHelper.CreateResponse(requestType, 0, ErrorCode.ERR_NotFoundActor);
                 }
-                IResponse response = await root.GetComponent<MessageSender>().Call(messageLocationSender.ActorId, iRequest, needException: false);
+                IResponse response = await Call(root, messageLocationSender.ActorId, iRequest, needException: false);
                 
                 if (messageLocationSender.InstanceId != instanceId)
                 {

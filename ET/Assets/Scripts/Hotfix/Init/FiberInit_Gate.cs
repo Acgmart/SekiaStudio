@@ -12,7 +12,6 @@ namespace ET.Server
             root.AddComponent<TimerComponent>();
             root.AddComponent<CoroutineLockComponent>();
             root.AddComponent<ProcessInnerSender>();
-            root.AddComponent<MessageSender>();
             root.AddComponent<PlayerComponent>();
             root.AddComponent<LocationProxyComponent>();
             root.AddComponent<MessageLocationSenderComponent>();
