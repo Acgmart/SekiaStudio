@@ -7,7 +7,6 @@
         {
             World.Instance.AddSingleton<NavmeshComponent>();
 
-            await FiberManager.Instance.Create(SchedulerType.ThreadPool, SceneType.NetInner, SceneType.NetInner, "NetInner");
             await FiberManager.Instance.Create(SchedulerType.ThreadPool, SceneType.Gate, SceneType.Gate, "Gate");
         }
     }

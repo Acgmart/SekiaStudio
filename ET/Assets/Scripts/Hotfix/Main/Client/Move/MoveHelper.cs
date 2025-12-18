@@ -11,7 +11,7 @@ namespace ET.Client
         {
             C2M_PathfindingResult msg = C2M_PathfindingResult.Create();
             msg.Position = targetPos;
-            unit.Root().GetComponent<ClientSenderComponent>().Send(msg);
+            unit.Root().GetComponent<SessionComponent>().Session.Send(msg);
 
             ObjectWait objectWait = unit.GetComponent<ObjectWait>();
             

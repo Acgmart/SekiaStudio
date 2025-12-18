@@ -22,7 +22,7 @@ namespace ET.Client
                 {
                     C2M_PathfindingResult c2MPathfindingResult = C2M_PathfindingResult.Create();
                     c2MPathfindingResult.Position = hit.point;
-                    self.Root().GetComponent<ClientSenderComponent>().Send(c2MPathfindingResult);
+                    self.Root().GetComponent<SessionComponent>().Session.Send(c2MPathfindingResult);
                 }
             }
             

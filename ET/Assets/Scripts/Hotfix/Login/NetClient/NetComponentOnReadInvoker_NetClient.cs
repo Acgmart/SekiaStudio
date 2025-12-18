@@ -2,7 +2,7 @@
 
 namespace ET.Client
 {
-    [Invoke(SceneType.NetClient)]
+    [Invoke(SceneType.StateSync)]
     public class NetComponentOnReadInvoker_NetClient: AInvokeHandler<NetComponentOnRead>
     {
         public override void Handle(NetComponentOnRead args)
@@ -23,11 +23,9 @@ namespace ET.Client
                     MessageSessionDispatcher.Instance.Handle(session, message);
                     break;
                 }
-                case IMessage iActorMessage:
+                case IMessage:
                 {
-                    // 扔到Main纤程队列中
-                    int parentFiberId = fiber.Root.GetComponent<FiberParentComponent>().ParentFiberId;
-                    fiber.Root.GetComponent<ProcessInnerSender>().Send(new ActorId(parentFiberId), iActorMessage);
+                    MessageQueue.Instance.Send(fiber.FiberId, new ActorId(fiber.FiberId), (MessageObject)message);
                     break;
                 }
                 default:

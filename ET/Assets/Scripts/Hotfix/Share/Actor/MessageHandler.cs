@@ -78,7 +78,7 @@ namespace ET
                 }
                 
                 response.RpcId = rpcId;
-                fiber.Root.GetComponent<ProcessInnerSender>().Reply(fiberId, response);
+                MessageQueue.Instance.Send(fiber.FiberId, new ActorId(fiberId, 0), response);
             }
             catch (Exception e)
             {

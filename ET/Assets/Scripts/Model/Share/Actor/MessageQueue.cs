@@ -17,16 +17,6 @@ namespace ET
         {
         }
 
-        public bool Send(ActorId actorId, MessageObject messageObject)
-        {
-            return this.Send(actorId.FiberId, actorId, messageObject);
-        }
-        
-        public void Reply(ActorId actorId, MessageObject messageObject)
-        {
-            this.Send(actorId.FiberId, actorId, messageObject);
-        }
-        
         public bool Send(int fiberId, ActorId actorId, MessageObject messageObject)
         {
             if (!this.messages.TryGetValue(actorId.FiberId, out var queue))

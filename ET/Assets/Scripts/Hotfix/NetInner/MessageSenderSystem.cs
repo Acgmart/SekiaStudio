@@ -9,8 +9,7 @@ namespace ET.Server
         public static void Send(this MessageSender self, ActorId actorId, IMessage message)
         {
             Fiber fiber = self.Fiber();
-            //本地Process消息
-            fiber.Root.GetComponent<ProcessInnerSender>().Send(actorId, message);
+            MessageQueue.Instance.Send(fiber.FiberId, actorId, (MessageObject)message);
         }
 
         private static int GetRpcId(this MessageSender self)
@@ -31,9 +30,7 @@ namespace ET.Server
             }
             Fiber fiber = self.Fiber();
 
-            IResponse response;
-            //本地Process消息
-            response = await fiber.Root.GetComponent<ProcessInnerSender>().Call(actorId, request, needException: needException);
+            IResponse response = await fiber.Root.GetComponent<ProcessInnerSender>().Call(actorId, request, needException: needException);
 
             if (response.Error == ErrorCode.ERR_MessageTimeout)
             {

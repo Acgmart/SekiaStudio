@@ -23,7 +23,7 @@ namespace ET.Server
             
             MessageResponse response = ObjectPool.Fetch<MessageResponse>();
             response.RpcId = message.RpcId;
-            fiber.Root.GetComponent<ProcessInnerSender>().Reply(fiberId, response);
+            MessageQueue.Instance.Send(fiber.FiberId, new ActorId(fiberId, 0), response);
 
             await this.Run(e, message);
         }
@@ -85,7 +85,7 @@ namespace ET.Server
                 // 这样会导致send实际上进入了新的协程，从而response却先发送出去了
                 using (await fiber.Root.GetComponent<CoroutineLockComponent>().Wait(CoroutineLockType.MessageLocationSender, entity.Id))
                 {
-                    fiber.Root.GetComponent<ProcessInnerSender>().Reply(fiberId, response);
+                    MessageQueue.Instance.Send(fiber.FiberId, new ActorId(fiberId, 0), response);
                 }
             }
             catch (Exception e)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
+using Unity.Mathematics;
 
 namespace ET
 {
@@ -24,16 +25,16 @@ namespace ET
             BsonSerializer.RegisterSerializer(typeof(ComponentsCollection), new BsonComponentsCollectionSerializer());
             BsonSerializer.RegisterSerializer(typeof(ChildrenCollection), new BsonChildrenCollectionSerializer());
             
-            
             // 自动注册IgnoreExtraElements
             ConventionPack conventionPack = new() { new IgnoreExtraElementsConvention(true) };
 
             ConventionRegistry.Register("IgnoreExtraElements", conventionPack, type => true);
 
-            //RegisterStruct<float2>();
-            //RegisterStruct<float3>();
-            //RegisterStruct<float4>();
-            //RegisterStruct<quaternion>();
+            RegisterStruct<float2>();
+            RegisterStruct<float3>();
+            RegisterStruct<float4>();
+            RegisterStruct<quaternion>();
+            
             //RegisterStruct<FP>();
             //RegisterStruct<TSVector>();
             //RegisterStruct<TSVector2>();

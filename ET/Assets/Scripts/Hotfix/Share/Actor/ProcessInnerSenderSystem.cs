@@ -51,7 +51,7 @@ namespace ET
                 if (message is IRequest request)
                 {
                     IResponse resp = MessageHelper.CreateResponse(request.GetType(), request.RpcId, ErrorCode.ERR_NotFoundActor);
-                    self.Reply(actorId.FiberId, resp);
+                    MessageQueue.Instance.Send(self.Fiber().FiberId, new ActorId(actorId.FiberId, 0), (MessageObject)resp);
                 }
                 return;
             }
@@ -84,22 +84,6 @@ namespace ET
             self.SetResult(response);
         }
         
-        public static void Reply(this ProcessInnerSender self, int fiberId, IResponse message)
-        {
-            self.SendInner(new ActorId(fiberId, 0), (MessageObject)message);
-        }
-
-        public static void Send(this ProcessInnerSender self, ActorId actorId, IMessage message)
-        {
-            self.SendInner(actorId, (MessageObject)message);
-        }
-
-        private static bool SendInner(this ProcessInnerSender self, ActorId actorId, MessageObject message)
-        {
-            Fiber fiber = self.Fiber();
-            return MessageQueue.Instance.Send(fiber.FiberId, actorId, message);
-        }
-
         private static int GetRpcId(this ProcessInnerSender self)
         {
             return ++self.RpcId;
@@ -124,7 +108,7 @@ namespace ET
             Type requestType = request.GetType();
             
             IResponse response;
-            if (!self.SendInner(actorId, (MessageObject)request))  // 纤程不存在
+            if (!MessageQueue.Instance.Send(fiber.FiberId, actorId, (MessageObject)request))  // 纤程不存在
             {
                 response = MessageHelper.CreateResponse(requestType, rpcId, ErrorCode.ERR_NotFoundActor);
                 return response;

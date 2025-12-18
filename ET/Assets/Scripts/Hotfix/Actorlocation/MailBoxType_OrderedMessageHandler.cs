@@ -28,7 +28,7 @@
                     if (messageObject is IRequest request)
                     {
                         IResponse resp = MessageHelper.CreateResponse(request.GetType(), request.RpcId, ErrorCode.ERR_NotFoundActor);
-                        mailBoxComponent.Root().GetComponent<ProcessInnerSender>().Reply(args.FiberId, resp);
+                        MessageQueue.Instance.Send(fiber.FiberId, new ActorId(args.FiberId, 0), (MessageObject)resp);
                     }
                     return;
                 }
