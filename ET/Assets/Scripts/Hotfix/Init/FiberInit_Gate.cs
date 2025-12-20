@@ -13,15 +13,11 @@ namespace ET.Server
             root.AddComponent<CoroutineLockComponent>();
             root.AddComponent<ProcessInnerSender>();
             root.AddComponent<PlayerComponent>();
-            root.AddComponent<LocationProxyComponent>();
-            root.AddComponent<MessageLocationSenderComponent>();
 
             root.AddComponent<NetComponent, IKcpTransport>(new UdpTransport(Options.Instance.InnerIPPort));
 
             root.AddComponent<UnitComponent>();
             root.AddComponent<AOIManagerComponent>();
-
-            root.AddComponent<LocationManagerComoponent>();
 
             await ETTask.CompletedTask;
         }

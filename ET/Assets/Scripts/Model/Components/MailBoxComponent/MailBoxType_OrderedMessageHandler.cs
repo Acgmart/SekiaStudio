@@ -32,7 +32,7 @@
                     }
                     return;
                 }
-                await MessageDispatcher.Instance.Handle(mailBoxComponent.Parent, args.FiberId, messageObject);
+                await MessageEntityDispatcher.Instance.Handle(mailBoxComponent.Parent, args.FiberId, messageObject);
             }
         }
     }

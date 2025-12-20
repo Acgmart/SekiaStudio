@@ -17,6 +17,13 @@ namespace ET
         {
         }
 
+        /// <summary>
+        /// 需要回信时发信Fiber上会有等回复任务 所以发信FiberId不能少 除非独立出不要回复的接口
+        /// </summary>
+        /// <param name="fiberId">发信的Fiber</param>
+        /// <param name="actorId">收信的Fiber和挂了MailBoxEntity的InstanceId</param>
+        /// <param name="messageObject"></param>
+        /// <returns></returns>
         public bool Send(int fiberId, ActorId actorId, MessageObject messageObject)
         {
             if (!this.messages.TryGetValue(actorId.FiberId, out var queue))

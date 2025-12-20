@@ -11,7 +11,6 @@
             string mapName = "Map2";
 			Unit unit = UnitFactory.Create(scene, player.Id, UnitType.Player, mapName);
 			response.MyId = player.Id;
-            await unit.AddLocation(LocationType.Unit);
 
             // 等到一帧的最后面再传送，先让G2C_EnterMap返回，否则传送消息可能比G2C_EnterMap还早
             TransferAtFrameFinish(unit, session, mapName).NoContext();

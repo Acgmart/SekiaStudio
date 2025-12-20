@@ -21,10 +21,8 @@ namespace ET.Server
                 playerComponent.Add(player);
                 PlayerSessionComponent playerSessionComponent = player.AddComponent<PlayerSessionComponent>();
                 playerSessionComponent.AddComponent<MailBoxComponent, int>(MailBoxType.GateSession);
-                await playerSessionComponent.AddLocation(LocationType.GateSession);
 
                 player.AddComponent<MailBoxComponent, int>(MailBoxType.UnOrderedMessage);
-                await player.AddLocation(LocationType.Player);
 
                 session.AddComponent<SessionPlayerComponent>().Player = player;
                 playerSessionComponent.Session = session;

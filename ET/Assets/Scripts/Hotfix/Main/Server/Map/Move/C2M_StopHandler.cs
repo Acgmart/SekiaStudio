@@ -1,7 +1,7 @@
 ﻿namespace ET.Server
 {
     [MessageHandler(SceneType.Gate)]
-    public class C2M_StopHandler: MessageLocationHandler<Unit, C2M_Stop>
+    public class C2M_StopHandler: MessageHandler<Unit, C2M_Stop>
     {
         protected override async ETTask Run(Unit unit, C2M_Stop message)
         {

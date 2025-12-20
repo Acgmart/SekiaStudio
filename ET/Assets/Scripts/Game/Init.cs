@@ -69,7 +69,7 @@ namespace ET
             World.Instance.AddSingleton<EntitySystemSingleton>();
             World.Instance.AddSingleton<EventSystem>();
             World.Instance.AddSingleton<AIDispatcherComponent>();
-            World.Instance.AddSingleton<MessageDispatcher>();
+            World.Instance.AddSingleton<MessageEntityDispatcher>();
             World.Instance.AddSingleton<MessageSessionDispatcher>();
             World.Instance.AddSingleton<NumericWatcherComponent>();
             World.Instance.AddSingleton<Client.UIEventComponent>();

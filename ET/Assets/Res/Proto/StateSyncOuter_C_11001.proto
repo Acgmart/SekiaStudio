@@ -55,13 +55,13 @@ message M2C_RemoveUnits // IMessage
 	repeated int64 Units = 1;
 }
 
-message C2M_PathfindingResult // ILocationMessage
+message C2M_PathfindingResult // IMessage
 {
 	int32 RpcId = 1;
 	Unity.Mathematics.float3 Position = 2;
 }
 
-message C2M_Stop // ILocationMessage
+message C2M_Stop // IMessage
 {
 	int32 RpcId = 1;
 }

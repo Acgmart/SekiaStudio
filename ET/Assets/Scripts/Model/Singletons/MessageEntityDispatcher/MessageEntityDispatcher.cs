@@ -19,7 +19,7 @@ namespace ET
     /// <summary>
     /// Actor消息分发组件
     /// </summary>
-    public class MessageDispatcher: Singleton<MessageDispatcher>, ISingletonAwake
+    public class MessageEntityDispatcher: Singleton<MessageEntityDispatcher>, ISingletonAwake
     {
         private readonly Dictionary<Type, List<MessageDispatcherInfo>> messageHandlers = new();
 
