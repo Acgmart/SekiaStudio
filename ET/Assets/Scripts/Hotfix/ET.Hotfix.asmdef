@@ -6,7 +6,6 @@
         "ET.Loader",
         "ET.MemoryPack",
         "ET.Model",
-        "ET.Recast",
         "ET.SourceGeneratorAttribute",
         "Unity.Mathematics"
     ],

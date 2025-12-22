@@ -4,7 +4,6 @@
     "references": [
         "ET.Core",
         "ET.MemoryPack",
-        "ET.Recast",
         "ET.SourceGeneratorAttribute",
         "ET.YooAssets",
         "Unity.Mathematics"

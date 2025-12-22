@@ -5,6 +5,13 @@ namespace ET.Server
 {
     public static partial class MoveHelper
     {
+        public static void Find(this Unit unit, float3 start, float3 target, List<float3> result)
+        {
+            //去除寻路组件 直接返回结果
+            result.Add(start);
+            result.Add(target);
+        }
+        
         // 可以多次调用，多次调用的话会取消上一次的协程
         public static async ETTask FindPathMoveToAsync(this Unit unit, float3 target)
         {
@@ -16,7 +23,7 @@ namespace ET.Server
             }
 
             M2C_PathfindingResult m2CPathfindingResult = M2C_PathfindingResult.Create();
-            unit.GetComponent<PathfindingComponent>().Find(unit.Position, target, m2CPathfindingResult.Points);
+            unit.Find(unit.Position, target, m2CPathfindingResult.Points);
 
             if (m2CPathfindingResult.Points.Count < 2)
             {

@@ -5,8 +5,6 @@
     {
         protected override async ETTask Run(Scene root, EntryEvent2 args)
         {
-            World.Instance.AddSingleton<NavmeshComponent>();
-
             await FiberManager.Instance.Create(SchedulerType.ThreadPool, SceneType.Gate, SceneType.Gate, "Gate");
         }
     }
