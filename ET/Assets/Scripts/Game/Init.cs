@@ -37,10 +37,10 @@ namespace ET
             {
                 typeof (World).Assembly, //Core
                 typeof (Define).Assembly, //Loader
-                typeof (FiberInit_Main).Assembly, //Model
+                typeof (MailBoxType).Assembly, //Model
                 typeof (Client.ResourcesLoaderComponent).Assembly, //ModelView
-                typeof (ETCancellationTokenHelper).Assembly, //Hotfix
-                typeof (Client.ResourcesLoaderComponentSystem).Assembly, //HotfixView
+                typeof (Server.EntryEvent2_InitServer).Assembly, //Hotfix
+                typeof (Client.EntryEvent3_InitClient).Assembly, //HotfixView
             });
 
             
@@ -51,7 +51,7 @@ namespace ET
             
             MemoryPackRegister.Init();
             
-            // 注册Entity序列化器
+            // 注册Entity序列化器 由SourceGenerator生成
             EntitySerializeRegister.Init();
 
             World.Instance.AddSingleton<SceneTypeSingleton, Type>(typeof(SceneType));

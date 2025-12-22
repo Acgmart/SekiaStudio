@@ -4,14 +4,14 @@
     {
         public static Unit GetMyUnitFromClientScene(Scene root)
         {
-            PlayerComponent playerComponent = root.GetComponent<PlayerComponent>();
+            MyPlayerComponent playerComponent = root.GetComponent<MyPlayerComponent>();
             Scene currentScene = root.GetComponent<CurrentScenesComponent>().Scene;
             return currentScene.GetComponent<UnitComponent>().Get(playerComponent.MyId);
         }
         
         public static Unit GetMyUnitFromCurrentScene(Scene currentScene)
         {
-            PlayerComponent playerComponent = currentScene.Root().GetComponent<PlayerComponent>();
+            MyPlayerComponent playerComponent = currentScene.Root().GetComponent<MyPlayerComponent>();
             return currentScene.GetComponent<UnitComponent>().Get(playerComponent.MyId);
         }
     }

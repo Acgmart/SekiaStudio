@@ -8,7 +8,7 @@ namespace ET.Client
         {
             long playerId = await LoginAsync(root, address, account, password);
 
-            root.GetComponent<PlayerComponent>().MyId = playerId;
+            root.GetComponent<MyPlayerComponent>().MyId = playerId;
             
             await EventSystem.Instance.PublishAsync(root, new LoginFinish());
         }
@@ -28,7 +28,7 @@ namespace ET.Client
             
             // 创建一个gate Session,并且保存到SessionComponent中
             Session gateSession = netComponent.Create(gateAddress);
-            //Session断线设计
+            gateSession.AddComponent<PingComponent>();
             root.AddComponent<SessionComponent>().Session = gateSession;
             C2G_LoginGate c2GLoginGate = C2G_LoginGate.Create();
             G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await gateSession.Call(c2GLoginGate);

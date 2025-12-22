@@ -13,7 +13,7 @@ namespace ET.Client
             root.AddComponent<UIGlobalComponent>();
             root.AddComponent<UIComponent>();
             root.AddComponent<ResourcesLoaderComponent>();
-            root.AddComponent<PlayerComponent>();
+            root.AddComponent<MyPlayerComponent>();
             root.AddComponent<CurrentScenesComponent>();
 
             await EventSystem.Instance.PublishAsync(root, new AppStartInitFinish());
