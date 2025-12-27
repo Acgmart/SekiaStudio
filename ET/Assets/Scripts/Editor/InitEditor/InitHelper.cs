@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using FUIEditor;
 
 namespace ET
 {
@@ -11,6 +12,8 @@ namespace ET
             ExcelEditor.Init();
             
             ProtoEditor.Init();
+            
+            FUICodeSpawner.FUICodeSpawn();
             
             DefineHelper.EnableDefineSymbols("INITED", true);
 

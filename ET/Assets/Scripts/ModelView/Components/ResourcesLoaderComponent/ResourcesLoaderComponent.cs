@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using YooAsset;
+using UnityEngine;
 
 namespace ET.Client
 {
@@ -44,7 +45,8 @@ namespace ET.Client
                 }
             }
         }
-
+        
+        //异步加载
         public static async ETTask<T> LoadAssetAsync<T>(this ResourcesLoaderComponent self, string location) where T : UnityEngine.Object
         {
             using CoroutineLock coroutineLock = await self.Root().GetComponent<CoroutineLockComponent>().Wait(CoroutineLockType.ResourcesLoader, location.GetHashCode());
@@ -60,6 +62,50 @@ namespace ET.Client
             }
 
             return (T)((AssetHandle)handler).AssetObject;
+        }
+        
+        //同步加载
+        public static T LoadAssetSync<T>(this ResourcesLoaderComponent self, string location) where T : UnityEngine.Object
+        {
+            HandleBase handler;
+            if (!self.handlers.TryGetValue(location, out handler))
+            {
+                handler = self.package.LoadAssetSync<T>(location);
+                self.handlers.Add(location, handler);
+            }
+
+            return (T)((AssetHandle)handler).AssetObject;
+        }
+
+        //异步加载
+        public static async ETTask<byte[]> LoadBytesAsync(this ResourcesLoaderComponent self, string location)
+        {
+            using CoroutineLock coroutineLock = await self.Root().GetComponent<CoroutineLockComponent>().Wait(CoroutineLockType.ResourcesLoader, location.GetHashCode());
+
+            HandleBase handler;
+            if (!self.handlers.TryGetValue(location, out handler))
+            {
+                handler = self.package.LoadAssetAsync<TextAsset>(location);
+
+                await handler.Task;
+
+                self.handlers.Add(location, handler);
+            }
+
+            return ((TextAsset)((AssetHandle)handler).AssetObject).bytes;
+        }
+        
+        //同步加载
+        public static byte[] LoadBytesSync(this ResourcesLoaderComponent self, string location)
+        {
+            HandleBase handler;
+            if (!self.handlers.TryGetValue(location, out handler))
+            {
+                handler = self.package.LoadAssetSync<TextAsset>(location);
+                self.handlers.Add(location, handler);
+            }
+
+            return ((TextAsset)((AssetHandle)handler).AssetObject).bytes;
         }
 
         public static async ETTask<Dictionary<string, T>> LoadAllAssetsAsync<T>(this ResourcesLoaderComponent self, string location) where T : UnityEngine.Object
@@ -98,6 +144,19 @@ namespace ET.Client
 
             await handler.Task;
             self.handlers.Add(location, handler);
+        }
+        
+        public static void UnloadAsset(this ResourcesLoaderComponent self, string location)
+        {
+            if (self.handlers.TryGetValue(location, out HandleBase handler))
+            {
+                handler.Release();
+                self.handlers.Remove(location);
+            }
+            else
+            {
+                Log.Error($"资源{location}不存在");
+            }
         }
     }
     

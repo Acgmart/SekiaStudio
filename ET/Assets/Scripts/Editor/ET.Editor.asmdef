@@ -4,7 +4,9 @@
     "references": [
         "Unity.Mathematics",
         "ET.Core",
-        "ET.Loader"
+        "ET.Loader",
+        "Unity.FairyGUI",
+        "Unity.LubanLib"
     ],
     "includePlatforms": [
         "Editor"

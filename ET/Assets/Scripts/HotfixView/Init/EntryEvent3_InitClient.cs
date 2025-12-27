@@ -10,11 +10,13 @@ namespace ET.Client
         protected override async ETTask Run(Scene root, EntryEvent3 args)
         {
             root.AddComponent<GlobalComponent>();
-            root.AddComponent<UIGlobalComponent>();
-            root.AddComponent<UIComponent>();
             root.AddComponent<ResourcesLoaderComponent>();
             root.AddComponent<MyPlayerComponent>();
             root.AddComponent<CurrentScenesComponent>();
+            
+            World.Instance.AddSingleton<FUIEventComponent>();
+            root.AddComponent<FUIAssetComponent, bool>(false);
+            root.AddComponent<FUIComponent>();
 
             await EventSystem.Instance.PublishAsync(root, new AppStartInitFinish());
         }

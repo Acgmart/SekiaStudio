@@ -36,3 +36,6 @@ ET/Assets/Scripts/Plugins/DotNet~/ET.Proto2CS/Exe/
 ET/Assets/Scripts/Plugins/DotNet~/ET.Proto2CS/obj/
 ET/Assets/Scripts/Plugins/DotNet~/ET.SourceGenerator/Exe/
 ET/Assets/Scripts/Plugins/DotNet~/ET.SourceGenerator/obj/
+
+# FairyGUI生成代码
+ET/Assets/Scripts/ModelView/Components/FairyGUI/FUI_AutoGen/

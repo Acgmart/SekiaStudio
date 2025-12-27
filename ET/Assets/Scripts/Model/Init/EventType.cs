@@ -1,16 +1,16 @@
 ﻿namespace ET.Client
 {
-    //场景切换-创建CurrenScene
+    //1.初次进入场景or场景切换-创建CurrenScene
     public struct AfterCreateCurrentScene
     {
     }
     
-    //场景切换-加载场景资源
+    //2.场景切换-加载场景资源
     public struct SceneChangeStart
     {
     }
     
-    //场景切换-加载UI
+    //3.场景切换-加载Map场景UI
     public struct SceneChangeFinish
     {
     }

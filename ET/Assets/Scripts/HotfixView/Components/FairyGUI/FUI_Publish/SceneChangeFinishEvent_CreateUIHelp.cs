@@ -1,0 +1,11 @@
+﻿namespace ET.Client
+{
+    [Publish(SceneType.Current)]
+    public class SceneChangeFinishEvent_CreateUIHelp : APublishHandler<SceneChangeFinish>
+    {
+        protected override async ETTask Run(Scene scene, SceneChangeFinish args)
+        {
+            await ETTask.CompletedTask;
+        }
+    }
+}

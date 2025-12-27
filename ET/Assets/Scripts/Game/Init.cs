@@ -29,8 +29,6 @@ namespace ET
 			
             World.Instance.AddSingleton<TimeInfo>();
             World.Instance.AddSingleton<FiberManager>();
-
-            await World.Instance.AddSingleton<ResourcesComponent>().CreatePackageAsync("DefaultPackage", true);
             
 #if INITED
             World.Instance.AddSingleton<CodeTypes, Assembly[]>(new[]
@@ -72,11 +70,13 @@ namespace ET
             World.Instance.AddSingleton<MessageEntityDispatcher>();
             World.Instance.AddSingleton<MessageSessionDispatcher>();
             World.Instance.AddSingleton<NumericWatcherComponent>();
-            World.Instance.AddSingleton<Client.UIEventComponent>();
             
+            await World.Instance.AddSingleton<ResourcesComponent>().CreatePackageAsync("DefaultPackage", true);
             await World.Instance.AddSingleton<ConfigLoader>().LoadAsync();
             
             await FiberManager.Instance.Create(SchedulerType.Main, SceneType.Main, SceneType.Main, "");
+#else
+            await ETTask.CompletedTask;
 #endif
         }
 

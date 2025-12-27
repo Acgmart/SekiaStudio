@@ -8,7 +8,9 @@
         "ET.SourceGeneratorAttribute",
         "ET.YooAssets",
         "Unity.Mathematics",
-        "ET.MemoryPack"
+        "ET.MemoryPack",
+        "Unity.FairyGUI",
+        "Unity.LubanLib"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
