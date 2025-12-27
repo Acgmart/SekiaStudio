@@ -1,5 +1,5 @@
 {
-    "name": "Unity.LubanLib",
+    "name": "LubanLib",
     "rootNamespace": "ET",
     "references": [],
     "includePlatforms": [],

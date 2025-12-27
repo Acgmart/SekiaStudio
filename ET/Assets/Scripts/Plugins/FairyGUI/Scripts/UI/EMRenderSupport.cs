@@ -107,7 +107,7 @@ namespace FairyGUI
                 return;
 
             UIConfig.ClearResourceRefs();
-            UIConfig[] configs = GameObject.FindObjectsOfType<UIConfig>();
+            UIConfig[] configs = GameObject.FindObjectsByType<UIConfig>(FindObjectsSortMode.None);
             foreach (UIConfig config in configs)
                 config.Load();
 

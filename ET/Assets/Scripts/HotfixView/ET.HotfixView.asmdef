@@ -9,9 +9,9 @@
         "ET.Model",
         "ET.ModelView",
         "ET.SourceGeneratorAttribute",
-        "ET.YooAssets",
         "Unity.Mathematics",
-        "Unity.FairyGUI"
+        "Unity.FairyGUI",
+        "YooAsset"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

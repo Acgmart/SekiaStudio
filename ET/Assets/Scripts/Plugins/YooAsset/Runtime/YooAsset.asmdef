@@ -1,9 +1,7 @@
 {
-    "name": "ET.YooAssets",
+    "name": "YooAsset",
     "rootNamespace": "",
-    "references": [
-        "ET.Core"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

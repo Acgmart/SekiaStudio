@@ -6,11 +6,11 @@
         "ET.Loader",
         "ET.Model",
         "ET.SourceGeneratorAttribute",
-        "ET.YooAssets",
         "Unity.Mathematics",
         "ET.MemoryPack",
         "Unity.FairyGUI",
-        "Unity.LubanLib"
+        "YooAsset",
+        "LubanLib"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

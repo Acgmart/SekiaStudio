@@ -83,6 +83,7 @@ Properties {
 	_ColorMask			("Color Mask", Float) = 15
 }
 
+/*
 SubShader {
 
 	Tags
@@ -332,6 +333,7 @@ SubShader {
 		ENDCG
 	}
 }
+*/
 
 Fallback "TextMeshPro/Mobile/Distance Field"
 CustomEditor "TMPro.EditorUtilities.TMP_SDFShaderGUI"

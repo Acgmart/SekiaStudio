@@ -193,7 +193,7 @@ namespace FairyGUI
             SetSize(Screen.width, Screen.height);
             this.cachedTransform.localScale = new Vector3(StageCamera.DefaultUnitsPerPixel, StageCamera.DefaultUnitsPerPixel, StageCamera.DefaultUnitsPerPixel);
 
-            StageEngine engine = GameObject.FindObjectOfType<StageEngine>();
+            StageEngine engine = GameObject.FindFirstObjectByType<StageEngine>();
             if (engine != null)
                 UnityEngine.Object.Destroy(engine.gameObject);
 

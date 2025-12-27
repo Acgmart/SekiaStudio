@@ -6,7 +6,7 @@
         "ET.Core",
         "ET.Loader",
         "Unity.FairyGUI",
-        "Unity.LubanLib"
+        "LubanLib"
     ],
     "includePlatforms": [
         "Editor"
