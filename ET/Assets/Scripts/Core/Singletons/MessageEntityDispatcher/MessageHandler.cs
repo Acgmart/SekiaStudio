@@ -25,11 +25,6 @@ namespace ET
 
         public Type GetRequestType()
         {
-            if (typeof (ILocationMessage).IsAssignableFrom(typeof (Message)))
-            {
-                Log.Error($"message is IActorLocationMessage but handler is AMActorHandler: {typeof (Message)}");
-            }
-
             return typeof (Message);
         }
 
@@ -88,11 +83,6 @@ namespace ET
 
         public Type GetRequestType()
         {
-            if (typeof (ILocationRequest).IsAssignableFrom(typeof (Request)))
-            {
-                Log.Error($"message is IActorLocationMessage but handler is AMActorRpcHandler: {typeof (Request)}");
-            }
-
             return typeof (Request);
         }
 
